@@ -1,0 +1,117 @@
+.HomeHero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    width: 100%;
+
+    .left {
+        width: 50%;
+
+        .head {
+            font-size: 5rem;
+            font-weight: 700;
+            text-transform: capitalize;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .subText {
+            font-size: 1rem;
+            color: gray;
+            width: 90%;
+            margin-bottom: 2rem;
+
+        }
+
+        .control {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            background-color: #ff745c;
+            width: fit-content;
+            border-radius: 10rem;
+
+            button {
+                background-color: #DF452B;
+                padding: 0.7rem 2rem;
+                border-radius: 10rem;
+                text-transform: uppercase;
+                font-weight: 900;
+            }
+
+            .users {
+                margin-right: 1rem;
+                font-weight: 500;
+            }
+        }
+
+        .statistics {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            gap: 2rem;
+            margin-bottom: 2rem;
+
+            .stat {
+                .number {
+                    font-size: 2rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                }
+
+                .info {
+                    color: gray;
+                    text-transform: capitalize;
+                }
+
+
+            }
+
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            gap: 1rem;
+
+            .number {
+                font-size: 3rem;
+                font-weight: 600;
+            }
+
+            .info {
+                p {
+                    color: gray;
+                    margin-bottom: 0.3rem;
+                }
+            }
+
+            .stars {
+                display: flex;
+                align-items: center;
+                justify-content: left;
+                gap: 0.2rem;
+
+                svg {
+                    fill: yellow;
+                }
+            }
+        }
+    }
+
+    .phone {
+        display: flex;
+        align-items: end;
+        justify-content: center;
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+}
