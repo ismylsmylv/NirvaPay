@@ -1,0 +1,59 @@
+.HomeAbout {
+    background-color: #6119C5;
+
+    .container {
+        padding: 3rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .head {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        svg {
+            display: inline;
+        }
+
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: center;
+            gap: 10px;
+
+            .dashed {
+                height: 1px;
+                border: 1px gray dashed;
+            }
+
+            .elem {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 15px;
+
+                .number {
+                    background-color: rgb(19, 19, 19);
+                    height: 4rem;
+                    width: 4rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 10rem;
+                    font-weight: 600;
+                    font-size: 2rem;
+                }
+
+                h1 {
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    text-transform: capitalize;
+                }
+
+                p {}
+            }
+        }
+    }
+}

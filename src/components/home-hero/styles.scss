@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     gap: 30px;
     width: 100%;
+    margin: 3rem auto;
 
     .left {
         width: 50%;
@@ -31,16 +32,22 @@
             justify-content: start;
             gap: 2rem;
             margin-bottom: 2rem;
-            background-color: #ff745c;
             width: fit-content;
             border-radius: 10rem;
 
             button {
-                background-color: #DF452B;
                 padding: 0.7rem 2rem;
                 border-radius: 10rem;
                 text-transform: uppercase;
-                font-weight: 900;
+                font-weight: 500;
+                background-color: #DF452B;
+                transition: 200ms linear;
+                border: 3px solid transparent;
+
+                &:hover {
+                    border-color: white;
+                }
+
             }
 
             .users {
@@ -111,7 +118,7 @@
 
         img {
             height: 100%;
-            width: auto;
+            width: 100%;
         }
     }
 }

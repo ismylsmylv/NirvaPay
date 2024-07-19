@@ -20,7 +20,7 @@ function HomeHero({}: Props) {
         </p>
         <div className="control">
           <button>get started</button>
-          <div className="users">100+</div>
+          {/* <div className="users">100+</div> */}
         </div>
         <div className="statistics">
           <TbCardsFilled size={50} />
