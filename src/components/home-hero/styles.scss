@@ -8,7 +8,7 @@
     margin: 3rem auto;
 
     .left {
-        width: 50%;
+        // max-width: 45%;
 
         .head {
             font-size: 5rem;
@@ -121,4 +121,20 @@
             width: 100%;
         }
     }
+}
+
+
+@media (max-width:1200px) {
+    .HomeHero {
+        .left .head {
+            font-size: 4rem;
+        }
+
+        .phone {
+            img {
+                display: none;
+            }
+        }
+    }
+
 }

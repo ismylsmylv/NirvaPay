@@ -2,10 +2,13 @@
     background-color: #6119C5;
 
     .container {
-        padding: 3rem 0;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
 
         .head {
             font-size: 3rem;
@@ -17,14 +20,19 @@
         }
 
         .flow {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            display: flex;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: 1fr;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
 
             .dashed {
                 height: 1px;
                 border: 1px gray dashed;
+                width: 100%;
+                max-width: 200px;
             }
 
             .elem {
@@ -50,10 +58,31 @@
                     font-size: 1.4rem;
                     font-weight: 600;
                     text-transform: capitalize;
+                    text-align: center;
+
                 }
 
-                p {}
+                p {
+                    text-align: center;
+                }
             }
         }
     }
+}
+
+@media (max-width:1285px) {
+    .HomeAbout .container .head {
+        margin-bottom: 20px;
+    }
+
+}
+
+
+@media (max-width:900px) {
+
+    .HomeAbout .container svg {
+        transform: rotate(90deg);
+    }
+
+
 }
