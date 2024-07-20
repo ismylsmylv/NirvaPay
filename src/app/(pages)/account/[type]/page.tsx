@@ -27,7 +27,9 @@ function Login({}: Props) {
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => {
-          const errors = {};
+          const errors: { email: string } = {
+            email: "",
+          };
           if (!values.email) {
             errors.email = "Required";
           } else if (

@@ -53,6 +53,7 @@
             padding: 0.4rem 1rem;
             // width: 40%;
             width: 100%;
+            margin-bottom: 3rem;
         }
 
         a {
@@ -60,6 +61,7 @@
             text-align: center;
             transition: 200ms linear;
             color: rgb(184, 184, 184);
+            margin-bottom: 1rem;
 
 
             p {
@@ -118,7 +120,10 @@
         .line {
             height: 0.1rem;
             width: 100%;
-            background-color: rgb(184, 184, 184);
+            border: 1px solid rgb(184, 184, 184, 0.5);
+            margin-bottom: 1rem;
+
+
         }
     }
 }
