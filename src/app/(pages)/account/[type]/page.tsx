@@ -26,33 +26,36 @@ function Login({}: Props) {
       <Image alt="logo" src={LogoImg} height={80} />
       <Formik
         initialValues={{ email: "", password: "" }}
-        validate={(values) => {
-          const errors: { email: string } = {
-            email: "",
-          };
-          if (!values.email) {
-            errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
-            errors.email = "Invalid email address";
-          }
-          return errors;
-        }}
+        // validate={(values) => {
+        //   const errors: { email: string } = {
+        //     email: "",
+        //   };
+        //   if (!values.email) {
+        //     errors.email = "Required";
+        //   } else if (
+        //     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+        //   ) {
+        //     errors.email = "Invalid email address";
+        //   }
+        //   return errors;
+        // }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          setSubmitting(false);
+          router.push("/dashboard");
+          console.log(values);
         }}
       >
         {({ isSubmitting }) => (
           <div className="formContainer">
             <Form>
               <h1>{type == "login" ? "Log in" : "Sign up"}</h1>
-              <Field type="email" name="email" />
+              <Field
+                type="email"
+                name="email"
+                placeholder="johndoe@example.com"
+              />
               <ErrorMessage name="email" component="div" />
-              <Field type="password" name="password" />
+              <Field type="password" name="password" placeholder="password" />
               <ErrorMessage name="password" component="div" />
               <button type="submit" disabled={isSubmitting}>
                 {type == "login" ? "Log in" : "Sign up"}
