@@ -15,15 +15,15 @@ function Login({}: Props) {
   const type = params.type;
   const router = useRouter();
   useEffect(() => {
-    if (type != "login") {
-      if (type != "signup") {
+    if (type != "signup") {
+      if (type != "login") {
         router.push("/account/login");
       }
     }
   }, []);
   return (
     <div className="Login container">
-      <Image alt="logo" src={LogoImg} height={100} />
+      <Image alt="logo" src={LogoImg} height={80} />
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => {

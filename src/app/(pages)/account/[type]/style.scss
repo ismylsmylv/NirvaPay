@@ -2,12 +2,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60vh;
+    min-height: 60vh;
     margin-top: 10rem;
     flex-direction: column;
 
     .formContainer {
-        width: 40%;
+        padding: 2rem 5rem;
+        // width: 100%;
 
         height: 100%;
 
@@ -31,9 +32,11 @@
         input {
             padding: 0.4rem 1rem;
             border: 1px solid rgb(184, 184, 184);
-            width: 40%;
+            // width: 40%;
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
+            width: 100%;
+
         }
 
         h1 {
@@ -48,7 +51,8 @@
             color: white;
             border-radius: 0.5rem;
             padding: 0.4rem 1rem;
-            width: 40%;
+            // width: 40%;
+            width: 100%;
         }
 
         a {
@@ -113,8 +117,26 @@
 
         .line {
             height: 0.1rem;
-            width: 40%;
+            width: 100%;
             background-color: rgb(184, 184, 184);
+        }
+    }
+}
+
+.Login>img {
+    margin: 0 auto;
+}
+
+@media (max-width:600px) {
+    .Login {
+
+        .formContainer {
+            padding: 2rem;
+
+            .google .signin {
+                padding: 0.5rem 1rem;
+            }
+
         }
     }
 }
