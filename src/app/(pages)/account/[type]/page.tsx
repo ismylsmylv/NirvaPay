@@ -15,8 +15,10 @@ function Login({}: Props) {
   const type = params.type;
   const router = useRouter();
   useEffect(() => {
-    if (type != "login" || type != "signup") {
-      // router.push("/");
+    if (type != "login") {
+      if (type != "signup") {
+        router.push("/account/login");
+      }
     }
   }, []);
   return (
