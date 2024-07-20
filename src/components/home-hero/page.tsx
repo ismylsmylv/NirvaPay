@@ -1,11 +1,14 @@
+"use client";
 import React from "react";
 import "./styles.scss";
 import { TbCardsFilled } from "react-icons/tb";
 import { FaStar } from "react-icons/fa";
 import Phone from "@/assets/img/image-Photoroom (2).png";
+import { useRouter } from "next/navigation";
 type Props = {};
 
 function HomeHero({}: Props) {
+  const router = useRouter();
   return (
     <div className="HomeHero container">
       <div className="left">
@@ -19,7 +22,13 @@ function HomeHero({}: Props) {
           allowing you to make payments with ease and peace of mind
         </p>
         <div className="control">
-          <button>get started</button>
+          <button
+            onClick={() => {
+              router.push("/account/login");
+            }}
+          >
+            get started
+          </button>
           {/* <div className="users">100+</div> */}
         </div>
         <div className="statistics">
