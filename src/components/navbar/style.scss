@@ -1,1 +1,52 @@
-.Navbar {}
+.Navbar {
+    padding: 2rem;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .logo {}
+
+        .list {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            gap: 1rem;
+
+            .profile {
+                display: flex;
+                gap: 1rem;
+                // margin-left: 2rem;
+
+                h1 {
+                    font-weight: 600;
+                    display: none;
+                }
+
+                img {
+                    height: 2rem;
+                    width: 2rem;
+                    object-fit: cover;
+                    border-radius: 5rem;
+                    cursor: pointer;
+
+                    &:hover {}
+                }
+            }
+
+            .nav:hover {
+
+
+                svg,
+                svg path {
+
+                    color: #DF452B;
+
+                }
+            }
+        }
+    }
+
+
+}
