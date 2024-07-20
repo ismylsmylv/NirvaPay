@@ -45,19 +45,21 @@ function Login({}: Props) {
         }}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <h1>{type == "login" ? "Log in" : "Sign up"}</h1>
-            <Field type="email" name="email" />
-            <ErrorMessage name="email" component="div" />
-            <Field type="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-            <button type="submit" disabled={isSubmitting}>
-              {type == "login" ? "Log in" : "Sign up"}
-            </button>
-            <Link href={`/account/${type == "login" ? "signup" : "login"}`}>
-              Already have an account?
-              <p>{type == "login" ? "Sign up " : "Log in "}instead</p>
-            </Link>
+          <div className="formContainer">
+            <Form>
+              <h1>{type == "login" ? "Log in" : "Sign up"}</h1>
+              <Field type="email" name="email" />
+              <ErrorMessage name="email" component="div" />
+              <Field type="password" name="password" />
+              <ErrorMessage name="password" component="div" />
+              <button type="submit" disabled={isSubmitting}>
+                {type == "login" ? "Log in" : "Sign up"}
+              </button>
+              <Link href={`/account/${type == "login" ? "signup" : "login"}`}>
+                Already have an account?
+                <p>{type == "login" ? "Sign up " : "Log in "}instead</p>
+              </Link>
+            </Form>
             <div className="line"></div>
             <div className="google">
               <button className="signin">
@@ -86,7 +88,7 @@ function Login({}: Props) {
                 Continue with Google
               </button>
             </div>
-          </Form>
+          </div>
         )}
       </Formik>
     </div>

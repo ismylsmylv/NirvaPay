@@ -6,16 +6,27 @@
     margin-top: 10rem;
     flex-direction: column;
 
-    form {
+    .formContainer {
         width: 40%;
+
+        height: 100%;
+
+
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         background-color: white;
         border-radius: 10px;
-        height: 100%;
         color: rgb(19, 19, 19);
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+        }
 
         input {
             padding: 0.4rem 1rem;
@@ -57,51 +68,53 @@
 
             }
         }
-    }
 
-    .google {
-        width: 100%;
-        margin: 0 auto;
-
-        .signin {
+        .google {
+            width: 100%;
             margin: 0 auto;
-            margin-top: 1rem;
-            max-width: 320px;
-            display: flex;
-            padding: 0.5rem 1.4rem;
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-            font-weight: 700;
-            text-align: center;
-            font-family: "Montserrat", sans-serif;
-            vertical-align: middle;
-            align-items: center;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            gap: 0.75rem;
-            color: #c4d2dc;
-            background-color: #19242b;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0, 0.87, 0.12, 1);
+
+            .signin {
+                margin: 0 auto;
+                margin-top: 1rem;
+                max-width: 320px;
+                display: flex;
+                padding: 0.5rem 1.4rem;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                font-weight: 700;
+                text-align: center;
+                font-family: "Montserrat", sans-serif;
+                vertical-align: middle;
+                align-items: center;
+                border-radius: 0.5rem;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                gap: 0.75rem;
+                color: #c4d2dc;
+                background-color: #19242b;
+                cursor: pointer;
+                transition: all 0.25s cubic-bezier(0, 0.87, 0.12, 1);
+            }
+
+            .signin:hover {
+                // transform: scale(1.025);
+            }
+
+            .signin:active {
+                // transform: scale(0.975);
+                // transform: scale(1.025);
+                filter: opacity(0.8);
+            }
+
+            button svg {
+                height: 24px;
+                width: auto;
+            }
         }
 
-        .signin:hover {
-            transform: scale(1.025);
+        .line {
+            height: 0.1rem;
+            width: 40%;
+            background-color: rgb(184, 184, 184);
         }
-
-        .signin:active {
-            transform: scale(0.975);
-        }
-
-        button svg {
-            height: 24px;
-            width: auto;
-        }
-    }
-
-    .line {
-        height: 0.1rem;
-        width: 40%;
-        background-color: rgb(184, 184, 184);
     }
 }
