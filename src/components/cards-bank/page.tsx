@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
 import LogoImg from "@/assets/img/logo.png";
 import Image from "next/image";
+import { toast, ToastContainer } from "react-toastify";
+import { FaClipboard } from "react-icons/fa";
+import { FaClipboardCheck } from "react-icons/fa";
+import "react-toastify/dist/ReactToastify.css";
 type Props = {};
-
+const details = [
+  { title: "Cardholder name", value: "john doe" },
+  { title: "Card number", value: "2345 0209 4985 9238" },
+  { title: "Expiry date", value: "02/29" },
+  { title: "CVV", value: "874" },
+];
 function CardsBank({}: Props) {
+  const [copy, setcopy] = useState(false);
   return (
     <div className="CardsBank">
+      <ToastContainer />
       <div className="card">
         <div className="card-inner">
           <div className="front">
@@ -27,7 +38,7 @@ function CardsBank({}: Props) {
             </div>
             <div className="row name">
               <p>JOE ALISON</p>
-              <p>10 / 25</p>
+              <p>10/25</p>
             </div>
           </div>
           <div className="back">
@@ -64,22 +75,38 @@ function CardsBank({}: Props) {
       </div>
       <div className="seperator"></div>
       <div className="details">
-        <div className="detail">
-          <h1>cardholder name</h1>
-          <p>john doe</p>
-        </div>
-        <div className="detail">
-          <h1>card number</h1>
-          <p>2345 0209 4985 9238</p>
-        </div>
-        <div className="detail">
-          <h1>expiry date</h1>
-          <p>02/29</p>
-        </div>
-        <div className="detail">
-          <h1>CVV</h1>
-          <p>229</p>
-        </div>
+        {details.map((detail) => {
+          return (
+            <div
+              className="detail"
+              key={detail.title}
+              onMouseLeave={() => {
+                setcopy(false);
+              }}
+            >
+              <h1>{detail.title}</h1>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(detail.value);
+                  setcopy(true);
+                  toast.info(`${detail.title} copied to clipboard`, {
+                    position: "bottom-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  });
+                }}
+              >
+                <p> {detail.value}</p>
+                {copy ? <FaClipboardCheck /> : <FaClipboard />}
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
