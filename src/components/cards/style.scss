@@ -1,0 +1,31 @@
+.Cards {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid gray;
+
+    .heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .headText {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .switch {
+            display: flex;
+
+            button {
+                padding: 1rem 1.5rem;
+                text-transform: capitalize;
+                border: 1px solid #6119C5;
+            }
+
+            .active {
+                background-color: #6119C5;
+
+            }
+        }
+    }
+}

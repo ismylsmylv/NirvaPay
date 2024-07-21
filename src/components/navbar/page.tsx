@@ -27,7 +27,9 @@ function Navbar({}: Props) {
   return (
     <div className="Navbar">
       <div className="container">
-        <Image alt="logo" src={LogoImg} />
+        <Link href={"/dashboard"}>
+          <Image alt="logo" src={LogoImg} height={40} />
+        </Link>
         <div className="list">
           {navs.map((nav) => {
             return (
