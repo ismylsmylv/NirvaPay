@@ -52,8 +52,8 @@ function CardsBank({}: Props) {
             </div>
             <div className="row card-text">
               <p>
-                this is a virtual card design using HTML and CSS. You can aslo
-                design something like this.
+                this card remains the property of Nirvapay and must be returned
+                upon request
               </p>
             </div>
             <div className="row signature">
@@ -78,7 +78,7 @@ function CardsBank({}: Props) {
         {details.map((detail) => {
           return (
             <div
-              className="detail"
+              className={detail.title == "CVV" ? "detail cvv" : "detail"}
               key={detail.title}
               onMouseLeave={() => {
                 setcopy(false);
