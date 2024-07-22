@@ -6,11 +6,78 @@
     justify-content: space-between;
 
     button {
-        width: 40%;
-        background-color: #6119C5;
-        padding: 1rem;
+        width: 50%;
+        padding: 2rem;
         display: flex;
         align-items: center;
-        justify-content: left;
+        justify-content: space-between;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+
+        .texts {
+            h1 {
+                font-weight: 700;
+                margin-bottom: 1rem;
+                text-align: left;
+                text-transform: uppercase;
+            }
+
+            p {
+                text-align: left;
+
+            }
+        }
+
+        .icon {
+            padding: 1rem;
+            background-color: white;
+
+        }
+
+        .back {
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+            padding: 0;
+
+            svg {
+                margin: 0;
+                padding: 0;
+                fill: white;
+                opacity: 0.1;
+            }
+        }
+
+        &:hover {
+            .icon {
+                background-color: #DF452B;
+
+                svg {
+                    fill: white;
+                }
+            }
+        }
+    }
+
+    .left {
+        background-color: #6119C5;
+
+        .icon {
+            svg {
+                fill: #6119C5;
+            }
+        }
+
+    }
+
+    .right {
+        background-color: #3A0182;
+
+        .icon {
+            svg {
+                fill: #6119C5;
+            }
+        }
     }
 }
