@@ -6,11 +6,11 @@ import CardsCrypto from "../cards-crypto/page";
 type Props = {};
 
 function Cards({}: Props) {
-  const [active, setactive] = useState(false);
+  const [active, setactive] = useState(true);
   return (
     <div className="Cards">
       <div className="heading">
-        <div className="headText">My Cards</div>
+        <div className="headText">My Account</div>
         {/* <div className="subText"></div> */}
         <div className="switch">
           <button

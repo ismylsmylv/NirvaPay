@@ -1,0 +1,26 @@
+.CardCrypto {
+    padding: 1rem;
+    border: 2px solid #6119C5;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover {
+        border-color: #DF452B;
+    }
+
+    img {
+        height: 3rem;
+        width: 3rem;
+        border-radius: 50%;
+    }
+
+    .content {
+        .name {
+            font-weight: 500;
+            font-size: 1.2rem;
+            text-transform: capitalize;
+        }
+    }
+}
