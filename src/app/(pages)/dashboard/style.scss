@@ -5,3 +5,9 @@
 
     .col {}
 }
+
+@media (max-width:1140px) {
+    .Dashboard {
+        grid-template-columns: 1fr;
+    }
+}
