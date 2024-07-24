@@ -22,5 +22,28 @@
             font-size: 1.2rem;
             text-transform: capitalize;
         }
+
+        .balance {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            gap: 0.5rem;
+
+            .count {
+                font-size: 2rem;
+            }
+        }
+
+        button {
+            color: gray;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: left;
+            align-items: center;
+
+            svg {
+                fill: gray;
+            }
+        }
     }
 }
