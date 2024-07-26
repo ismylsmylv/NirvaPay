@@ -15,14 +15,19 @@ import {
 } from "firebase/auth";
 import { useParams, useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { checkAuth } from "@/redux/slice/auth";
 type Props = {};
 
 function Login({}: Props) {
   const params = useParams<{ type: string }>();
   const type = params.type;
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((state) => state.auth.auth);
   useEffect(() => {
-    localStorage.getItem("auth") && router.push("/dashboard");
+    dispatch(checkAuth());
+    auth && router.push("/dashboard");
     if (type != "signup") {
       if (type != "login") {
         router.push("/account/login");
