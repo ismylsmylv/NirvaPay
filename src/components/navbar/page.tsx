@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RiDashboardLine } from "react-icons/ri";
 import { RiWallet3Line } from "react-icons/ri";
 import { GrTransaction } from "react-icons/gr";
@@ -10,6 +10,9 @@ import "./style.scss";
 import LogoImg from "@/assets/img/logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { checkAuth } from "@/redux/slice/auth";
+import { useRouter } from "next/navigation";
 type Props = {};
 const navs = [
   { icon: <RiDashboardLine size={25} />, name: "Dashboard", url: "/" },
@@ -24,29 +27,39 @@ const navs = [
   // { icon: <CgProfile />, name: "Settings", url: "/profile" },
 ];
 function Navbar({}: Props) {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const auth = useAppSelector((state) => state.auth.auth);
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, []);
   return (
     <div className="Navbar">
-      <div className="container">
-        <Link href={"/dashboard"}>
-          <Image alt="logo" src={LogoImg} height={40} />
-        </Link>
-        <div className="list">
-          {navs.map((nav) => {
-            return (
-              <Link href={nav.url} className="nav" key={nav.name}>
-                {nav.icon}
-              </Link>
-            );
-          })}
-          <div className="profile">
-            <h1>Hello, Thomas</h1>
-            <img
-              src="https://www.rcwlitagency.com/media/5954/stagg-1.jpg"
-              alt=""
-            />
+      {auth && (
+        <>
+          <div className="container">
+            <Link href={"/dashboard"}>
+              <Image alt="logo" src={LogoImg} height={40} />
+            </Link>
+            <div className="list">
+              {navs.map((nav) => {
+                return (
+                  <Link href={nav.url} className="nav" key={nav.name}>
+                    {nav.icon}
+                  </Link>
+                );
+              })}
+              <div className="profile">
+                <h1>Hello, Thomas</h1>
+                <img
+                  src="https://www.rcwlitagency.com/media/5954/stagg-1.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

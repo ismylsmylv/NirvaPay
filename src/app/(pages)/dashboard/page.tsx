@@ -5,16 +5,21 @@ import Cards from "@/components/cards/page";
 import Transfer from "@/components/transfer/page";
 import Charts from "@/components/chart/page";
 import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { checkAuth } from "@/redux/slice/auth";
 type Props = {};
 
 function Dashboard({}: Props) {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector((state) => state.auth.auth);
   useEffect(() => {
-    !localStorage.getItem("auth") && router.push("/account/login");
+    dispatch(checkAuth());
+    !auth && router.push("/account/login");
   }, []);
   return (
     <div className="Dashboard container ">
-      {localStorage.getItem("auth") && (
+      {auth && (
         <>
           <div className="col">
             <Cards />
