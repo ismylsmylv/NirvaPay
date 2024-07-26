@@ -1,19 +1,20 @@
 "use client";
-import React, { useEffect } from "react";
-import "./style.scss";
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import LogoImg from "@/assets/img/logo.png";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useParams } from "next/navigation";
+import { use, useEffect } from "react";
+import "./style.scss";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+import { auth } from "@/lib/firebase/config";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { auth } from "@/lib/firebase/config";
+import { useParams, useRouter } from "next/navigation";
+import "react-toastify/dist/ReactToastify.css";
 type Props = {};
 
 function Login({}: Props) {
@@ -21,15 +22,17 @@ function Login({}: Props) {
   const type = params.type;
   const router = useRouter();
   useEffect(() => {
+    localStorage.getItem("auth") && router.push("/dashboard");
     if (type != "signup") {
       if (type != "login") {
         router.push("/account/login");
       }
     }
   }, []);
-
+  const notify = (alert) => toast(alert);
   return (
     <div className="Login container">
+      <ToastContainer style={{ color: "black" }} autoClose={4000} />
       <Image alt="logo" src={LogoImg} height={80} />
       <Formik
         initialValues={{ email: "", password: "" }}
@@ -60,24 +63,36 @@ function Login({}: Props) {
                 .then((userCredential) => {
                   // Signed up
                   const user = userCredential.user;
-                  router.push("/account/login");
                   // ...
+                  notify("Signed up successfully");
+                })
+                .then(() => {
+                  setTimeout(() => {
+                    router.push("/account/login");
+                  }, 1000);
                 })
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
+                  notify("Error while signing up");
+
                   // ..
                 })
             : signInWithEmailAndPassword(auth, values.email, values.password)
                 .then((userCredential) => {
                   // Signed in
                   const user = userCredential.user;
-                  router.push("/dashboard");
                   // ...
+                  notify("Logged in successfully");
+                  localStorage.setItem("auth", JSON.stringify(user));
+                })
+                .then(() => {
+                  router.push("/dashboard");
                 })
                 .catch((error) => {
                   const errorCode = error.code;
                   const errorMessage = error.message;
+                  notify("Incorrect username or password");
                 });
         }}
       >
@@ -97,7 +112,10 @@ function Login({}: Props) {
                 {type == "login" ? "Log in" : "Sign up"}
               </button>
               <Link href={`/account/${type == "login" ? "signup" : "login"}`}>
-                Already have an account?
+                {type == "login"
+                  ? "Don't have an account?"
+                  : "Already have an account?"}
+
                 <p>{type == "login" ? "Sign up " : "Log in "}instead</p>
               </Link>
             </Form>
