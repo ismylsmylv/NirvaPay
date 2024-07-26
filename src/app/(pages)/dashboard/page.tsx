@@ -15,8 +15,8 @@ function Dashboard({}: Props) {
   const auth = useAppSelector((state) => state.auth.auth);
   useEffect(() => {
     dispatch(checkAuth());
-    !auth && router.push("/account/login");
   }, []);
+  !auth && router.push("/account/login");
   return (
     <div className="Dashboard container ">
       {auth && (
