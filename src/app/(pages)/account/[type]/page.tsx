@@ -7,7 +7,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useParams } from "next/navigation";
-
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { auth } from "@/lib/firebase/config";
 type Props = {};
 
 function Login({}: Props) {
@@ -21,6 +27,7 @@ function Login({}: Props) {
       }
     }
   }, []);
+
   return (
     <div className="Login container">
       <Image alt="logo" src={LogoImg} height={80} />
@@ -41,8 +48,37 @@ function Login({}: Props) {
         // }}
         onSubmit={(values, { setSubmitting }) => {
           setSubmitting(false);
-          router.push("/dashboard");
+
           console.log(values);
+
+          type == "signup"
+            ? createUserWithEmailAndPassword(
+                auth,
+                values.email,
+                values.password
+              )
+                .then((userCredential) => {
+                  // Signed up
+                  const user = userCredential.user;
+                  router.push("/account/login");
+                  // ...
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                  // ..
+                })
+            : signInWithEmailAndPassword(auth, values.email, values.password)
+                .then((userCredential) => {
+                  // Signed in
+                  const user = userCredential.user;
+                  router.push("/dashboard");
+                  // ...
+                })
+                .catch((error) => {
+                  const errorCode = error.code;
+                  const errorMessage = error.message;
+                });
         }}
       >
         {({ isSubmitting }) => (
