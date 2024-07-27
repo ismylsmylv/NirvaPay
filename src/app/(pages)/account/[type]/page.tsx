@@ -12,14 +12,18 @@ import { auth } from "@/lib/firebase/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { useParams, useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth } from "@/redux/slice/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+
 type Props = {};
 
 function Login({}: Props) {
+  const provider = new GoogleAuthProvider();
   const params = useParams<{ type: string }>();
   const type = params.type;
   const router = useRouter();
@@ -32,8 +36,8 @@ function Login({}: Props) {
         router.push("/account/login");
       }
     }
-    authState && router.push("/dashboard");
-  }, []);
+  }, [authState]);
+  authState && router.push("/dashboard");
   const notify = (alert) => toast(alert);
   return (
     <>
@@ -140,7 +144,47 @@ function Login({}: Props) {
                 </Form>
                 <div className="line"></div>
                 <div className="google">
-                  <button className="signin">
+                  <button
+                    className="signin"
+                    onClick={() => {
+                      signInWithPopup(auth, provider)
+                        .then((result) => {
+                          // This gives you a Google Access Token. You can use it to access the Google API.
+                          const credential =
+                            GoogleAuthProvider.credentialFromResult(result);
+                          // const token = credential.accessToken;
+                          // The signed-in user info.
+                          const user = result.user;
+                          localStorage.setItem("auth", JSON.stringify(user));
+                          notify("Authentication success");
+                          // IdP data available using getAdditionalUserInfo(result)
+                          // ...
+                        })
+                        .catch((error) => {
+                          // Handle Errors here.
+                          const errorCode = error.code;
+                          const errorMessage = error.message;
+                          const email = error.customData.email;
+                          notify(
+                            errorCode
+                              ? "There was an error while authenticating"
+                              : email
+                              ? "Email is already in use"
+                              : errorMessage
+                          );
+
+                          // The email of the user's account used.
+                          // The AuthCredential type that was used.
+                          const credential =
+                            GoogleAuthProvider.credentialFromError(error);
+                          // ...
+                          console.log(error);
+                        })
+                        .then(() => {
+                          router.push("/dashboard");
+                        });
+                    }}
+                  >
                     <svg
                       viewBox="0 0 256 262"
                       preserveAspectRatio="xMidYMid"

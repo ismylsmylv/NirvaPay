@@ -5,6 +5,7 @@ import { TbCardsFilled } from "react-icons/tb";
 import { FaStar } from "react-icons/fa";
 import Phone from "@/assets/img/image-Photoroom (2).png";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 type Props = {};
 
 function HomeHero({}: Props) {
@@ -22,13 +23,7 @@ function HomeHero({}: Props) {
           allowing you to make payments with ease and peace of mind
         </p>
         <div className="control">
-          <button
-            onClick={() => {
-              router.push("/account/login");
-            }}
-          >
-            get started
-          </button>
+          <Link href="/account/login">get started</Link>
           {/* <div className="users">100+</div> */}
         </div>
         <div className="statistics">
