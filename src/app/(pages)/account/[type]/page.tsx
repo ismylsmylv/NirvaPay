@@ -8,7 +8,7 @@ import "./style.scss";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import { auth } from "@/lib/firebase/config";
+import { auth, db } from "@/lib/firebase/config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -101,6 +101,23 @@ function Login({}: Props) {
                       // ...
                       notify("Logged in successfully");
                       localStorage.setItem("auth", JSON.stringify(user));
+                      db.collection("users")
+                        .doc("LA")
+                        .set({
+                          email: values.email,
+                          card: {
+                            balance: 0,
+                            number: "1234567887654321",
+                            expire: "07/12",
+                            cvv: 233,
+                          },
+                        })
+                        .then(() => {
+                          console.log("Document successfully written!");
+                        })
+                        .catch((error) => {
+                          console.error("Error writing document: ", error);
+                        });
                     })
                     .then(() => {
                       router.push("/dashboard");

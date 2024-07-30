@@ -14,10 +14,12 @@ const firebaseConfig = {
     storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
     messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
     appId: process.env.NEXT_PUBLIC_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
+    measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+    databaseURL: process.env.NEXT_PUBLIC_DATABASE_URL,
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const analytics = getAnalytics(app);
+export const db = firebase.firestore();
 // export const firebase = !fb.apps.length ? fb.initializeApp(firebaseConfig) : fb.app()
