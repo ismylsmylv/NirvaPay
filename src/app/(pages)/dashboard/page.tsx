@@ -22,10 +22,10 @@ function Dashboard({}: Props) {
   !auth && router.push("/account/login");
   return (
     <div className="Dashboard container ">
-      {auth && (
+      {auth && userdatas && (
         <>
           <div className="col">
-            <Cards />
+            <Cards userdatas={userdatas} />
           </div>
           <div className="">
             <Transfer />

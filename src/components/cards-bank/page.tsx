@@ -13,7 +13,7 @@ const details = [
   { title: "Expiry date", value: "02/29" },
   { title: "CVV", value: "874" },
 ];
-function CardsBank({}: Props) {
+function CardsBank({ userdatas }: Props) {
   const [copy, setcopy] = useState(false);
   return (
     <div className="CardsBank">
@@ -27,10 +27,11 @@ function CardsBank({}: Props) {
               <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="60px" />
             </div>
             <div className="row card-no">
-              <p>5244</p>
+              {<p>{userdatas.card.number}</p>}
+              {/* <p>5244</p>
               <p>2150</p>
               <p>8252</p>
-              <p>6420</p>
+              <p>6420</p> */}
             </div>
             <div className="row card-holder">
               {/* <p>CARD HPLDER</p> */}
@@ -38,7 +39,7 @@ function CardsBank({}: Props) {
             </div>
             <div className="row name">
               <p>JOE ALISON</p>
-              <p>10/25</p>
+              <p>{userdatas.card.expire}</p>
             </div>
           </div>
           <div className="back">
@@ -48,7 +49,7 @@ function CardsBank({}: Props) {
               <div>
                 <img src="https://i.ibb.co/S6JG8px/pattern.png" />
               </div>
-              <p>824</p>
+              <p>{userdatas.card.cvv}</p>
             </div>
             <div className="row card-text">
               <p>

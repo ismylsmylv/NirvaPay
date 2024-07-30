@@ -5,7 +5,7 @@ import CardsBank from "../cards-bank/page";
 import CardsCrypto from "../cards-crypto/page";
 type Props = {};
 
-function Cards({}: Props) {
+function Cards({ userdatas }: Props) {
   const [active, setactive] = useState(true);
   return (
     <div className="Cards">
@@ -31,7 +31,7 @@ function Cards({}: Props) {
           </button>
         </div>
       </div>
-      {active ? <CardsCrypto /> : <CardsBank />}
+      {active ? <CardsCrypto /> : <CardsBank userdatas={userdatas} />}
     </div>
   );
 }
