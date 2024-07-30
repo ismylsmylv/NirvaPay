@@ -13,9 +13,11 @@ function Dashboard({}: Props) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.auth);
+  const userdatas = useAppSelector((state) => state.auth.userdatas);
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(fetchUserById());
+    console.log(userdatas);
   }, []);
   !auth && router.push("/account/login");
   return (

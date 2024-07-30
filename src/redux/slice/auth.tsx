@@ -13,8 +13,12 @@ const initialState: authState = {
 };
 export const fetchUserById = createAsyncThunk(
   "users/fetchByIdStatus",
-  async (id) => {
-    const docRef = doc(db, "users", id);
+  async () => {
+    const docRef = doc(
+      db,
+      "users",
+      JSON.parse(localStorage.getItem("auth")).uid
+    );
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
