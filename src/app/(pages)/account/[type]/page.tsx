@@ -97,7 +97,7 @@ function Login({}: Props) {
                     })
                     .then(() => {
                       setTimeout(() => {
-                        // router.push("/account/login");
+                        router.push("/account/login");
                       }, 1000);
                     })
                     .catch((error) => {
@@ -118,11 +118,11 @@ function Login({}: Props) {
                       const user = userCredential.user;
                       // ...
                       notify("Logged in successfully");
-                      // localStorage.setItem("auth", JSON.stringify(user));
+                      localStorage.setItem("auth", JSON.stringify(user));
                     })
-                    // .then(() => {
-                    //   // router.push("/dashboard");
-                    // })
+                    .then(() => {
+                      router.push("/dashboard");
+                    })
                     .catch((error) => {
                       const errorCode = error.code;
                       const errorMessage = error.message;
