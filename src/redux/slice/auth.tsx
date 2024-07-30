@@ -1,14 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase/config";
 export interface authState {
   auth: boolean;
+  userdatas: [];
 }
 
 const initialState: authState = {
   auth: false,
+  userdatas: [],
 };
+export const fetchUserById = createAsyncThunk(
+  "users/fetchByIdStatus",
+  async (id) => {
+    const docRef = doc(db, "users", id);
+    const docSnap = await getDoc(docRef);
 
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      return docSnap.data();
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
+);
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -26,6 +43,13 @@ export const authSlice = createSlice({
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.value += action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(fetchUserById.fulfilled, (state, action) => {
+      // Add user to the state array
+      state.userdatas = action.payload;
+    });
   },
 });
 

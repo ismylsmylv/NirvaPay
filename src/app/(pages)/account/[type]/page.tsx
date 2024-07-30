@@ -79,7 +79,7 @@ function Login({}: Props) {
                       console.log(user);
                       // ...
                       notify("Signed up successfully");
-                      setDoc(userDoc, {
+                      setDoc(doc(usersCollection, user.uid), {
                         email: values.email,
                         card: {
                           balance: 0,

@@ -6,7 +6,7 @@ import Transfer from "@/components/transfer/page";
 import Charts from "@/components/chart/page";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
-import { checkAuth } from "@/redux/slice/auth";
+import { checkAuth, fetchUserById } from "@/redux/slice/auth";
 type Props = {};
 
 function Dashboard({}: Props) {
@@ -15,6 +15,7 @@ function Dashboard({}: Props) {
   const auth = useAppSelector((state) => state.auth.auth);
   useEffect(() => {
     dispatch(checkAuth());
+    dispatch(fetchUserById());
   }, []);
   !auth && router.push("/account/login");
   return (
