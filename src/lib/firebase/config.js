@@ -2,6 +2,8 @@
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore'; // Import Firestore
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,9 +19,11 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
     databaseURL: process.env.NEXT_PUBLIC_DATABASE_URL,
 };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const analytics = getAnalytics(app);
-export const db = firebase.firestore();
-// export const firebase = !fb.apps.length ? fb.initializeApp(firebaseConfig) : fb.app()
+export const db = getFirestore(app); // Initialize Firestore
+
+// No need for the old firebase initialization with fb.apps.length

@@ -3,26 +3,28 @@ import LogoImg from "@/assets/img/logo.png";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
-import { use, useEffect } from "react";
-import "./style.scss";
+import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import "./style.scss";
 
-import "react-toastify/dist/ReactToastify.css";
 import { auth, db } from "@/lib/firebase/config";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { checkAuth } from "@/redux/slice/auth";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { useParams, useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
-import { checkAuth } from "@/redux/slice/auth";
-import { GoogleAuthProvider } from "firebase/auth";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 type Props = {};
 
 function Login({}: Props) {
+  const usersCollection = collection(db, "users");
+  const userDoc = doc(usersCollection);
   const provider = new GoogleAuthProvider();
   const params = useParams<{ type: string }>();
   const type = params.type;
@@ -74,12 +76,28 @@ function Login({}: Props) {
                     .then((userCredential) => {
                       // Signed up
                       const user = userCredential.user;
+                      console.log(user);
                       // ...
                       notify("Signed up successfully");
+                      setDoc(userDoc, {
+                        email: values.email,
+                        card: {
+                          balance: 0,
+                          number: "1234567887654321",
+                          expire: "07/12",
+                          cvv: 233,
+                        },
+                      })
+                        .then(() => {
+                          console.log("Document successfully written!");
+                        })
+                        .catch((error) => {
+                          console.error("Error writing document: ", error);
+                        });
                     })
                     .then(() => {
                       setTimeout(() => {
-                        router.push("/account/login");
+                        // router.push("/account/login");
                       }, 1000);
                     })
                     .catch((error) => {
@@ -100,28 +118,11 @@ function Login({}: Props) {
                       const user = userCredential.user;
                       // ...
                       notify("Logged in successfully");
-                      localStorage.setItem("auth", JSON.stringify(user));
-                      db.collection("users")
-                        .doc("LA")
-                        .set({
-                          email: values.email,
-                          card: {
-                            balance: 0,
-                            number: "1234567887654321",
-                            expire: "07/12",
-                            cvv: 233,
-                          },
-                        })
-                        .then(() => {
-                          console.log("Document successfully written!");
-                        })
-                        .catch((error) => {
-                          console.error("Error writing document: ", error);
-                        });
+                      // localStorage.setItem("auth", JSON.stringify(user));
                     })
-                    .then(() => {
-                      router.push("/dashboard");
-                    })
+                    // .then(() => {
+                    //   // router.push("/dashboard");
+                    // })
                     .catch((error) => {
                       const errorCode = error.code;
                       const errorMessage = error.message;
