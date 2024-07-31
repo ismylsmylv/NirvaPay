@@ -40,7 +40,7 @@ function Login({}: Props) {
     }
   }, [authState]);
   authState && router.push("/dashboard");
-  const notify = (alert) => toast(alert);
+  const notify = (alert: any) => toast(alert);
   return (
     <>
       {!authState && (

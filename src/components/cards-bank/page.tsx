@@ -5,8 +5,10 @@ import Image from "next/image";
 import { toast, ToastContainer } from "react-toastify";
 import { FaClipboard } from "react-icons/fa";
 import { FaClipboardCheck } from "react-icons/fa";
+import VisaImg from "@/assets/img/visa.png";
+import MastercardImg from "@/assets/img/mastercard.png";
 import "react-toastify/dist/ReactToastify.css";
-type Props = {};
+type Props = { userdatas: any };
 function CardsBank({ userdatas }: Props) {
   const [copy, setcopy] = useState(false);
   const details = [
@@ -25,7 +27,16 @@ function CardsBank({ userdatas }: Props) {
             {/* <img src="https://i.ibb.co/PYss3yv/map.png" className="map-img" /> */}
             <div className="row">
               <Image alt="logo" src={LogoImg.src} height={30} width={120} />
-              <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="60px" />
+              <img
+                src={
+                  userdatas?.card?.vendor == "visa"
+                    ? VisaImg.src
+                    : userdatas?.card?.vendor == "mastercard"
+                    ? MastercardImg.src
+                    : ""
+                }
+                width="60px"
+              />
             </div>
             <div className="row card-no">
               {<p>{userdatas?.card?.number}</p>}
@@ -60,7 +71,16 @@ function CardsBank({ userdatas }: Props) {
             </div>
             <div className="row signature">
               <p>CUSTOMER SIGNATURE</p>
-              <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="80px" />
+              <img
+                src={
+                  userdatas?.card?.vendor == "visa"
+                    ? VisaImg.src
+                    : userdatas?.card?.vendor == "mastercard"
+                    ? MastercardImg.src
+                    : ""
+                }
+                width="80px"
+              />
             </div>
           </div>
         </div>

@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import "./style.scss";
 import CardsBank from "../cards-bank/page";
 import CardsCrypto from "../cards-crypto/page";
-type Props = {};
+type Props = {
+  userdatas: any;
+};
 
 function Cards({ userdatas }: Props) {
   const [active, setactive] = useState(false);
@@ -31,7 +33,11 @@ function Cards({ userdatas }: Props) {
           </button>
         </div>
       </div>
-      {active ? <CardsCrypto /> : <CardsBank userdatas={userdatas} />}
+      {active ? (
+        <CardsCrypto userdatas={userdatas} />
+      ) : (
+        <CardsBank userdatas={userdatas} />
+      )}
     </div>
   );
 }
