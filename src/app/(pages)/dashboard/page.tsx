@@ -28,7 +28,7 @@ function Dashboard({}: Props) {
             <Cards userdatas={userdatas} />
           </div>
           <div className="">
-            <Transfer />
+            <Transfer userdatas={userdatas} />
             <Charts />
           </div>
         </>

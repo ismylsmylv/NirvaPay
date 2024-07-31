@@ -5,11 +5,13 @@ import { db } from "@/lib/firebase/config";
 export interface authState {
   auth: boolean;
   userdatas: [];
+  uid: string;
 }
 
 const initialState: authState = {
   auth: false,
   userdatas: [],
+  uid: "",
 };
 export const fetchUserById = createAsyncThunk(
   "users/fetchByIdStatus",
@@ -40,6 +42,9 @@ export const authSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.auth = localStorage.getItem("auth") ? true : false;
+      state.uid = state.auth
+        ? JSON.parse(localStorage.getItem("auth")).uid
+        : "";
     },
     decrement: (state) => {
       state.value -= 1;

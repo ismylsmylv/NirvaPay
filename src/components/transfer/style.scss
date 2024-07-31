@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: space-between;
 
+
     button {
         width: 50%;
         padding: 2rem;
@@ -79,5 +80,38 @@
                 fill: #6119C5;
             }
         }
+    }
+}
+
+
+
+.qrmodal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .logo {
+        font-family: "Istok Web", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+
+        p {
+            font-size: 1.8rem;
+
+            display: inline;
+            color: #6119C5;
+            font-weight: 600;
+        }
+    }
+
+    .qr {
+        padding: 0.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        width: fit-content;
     }
 }
