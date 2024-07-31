@@ -6,7 +6,7 @@ import CardsCrypto from "../cards-crypto/page";
 type Props = {};
 
 function Cards({ userdatas }: Props) {
-  const [active, setactive] = useState(true);
+  const [active, setactive] = useState(false);
   return (
     <div className="Cards">
       <div className="heading">

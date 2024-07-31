@@ -7,14 +7,15 @@ import { FaClipboard } from "react-icons/fa";
 import { FaClipboardCheck } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 type Props = {};
-const details = [
-  { title: "Cardholder name", value: "john doe" },
-  { title: "Card number", value: "2345 0209 4985 9238" },
-  { title: "Expiry date", value: "02/29" },
-  { title: "CVV", value: "874" },
-];
 function CardsBank({ userdatas }: Props) {
   const [copy, setcopy] = useState(false);
+  const details = [
+    { title: "Cardholder name", value: userdatas?.card?.name },
+    { title: "Card number", value: userdatas?.card?.number },
+    { title: "Expiry date", value: userdatas?.card?.expire },
+    { title: "CVV", value: userdatas?.card?.cvv },
+  ];
+
   return (
     <div className="CardsBank">
       <ToastContainer />
@@ -27,7 +28,7 @@ function CardsBank({ userdatas }: Props) {
               <img src="https://i.ibb.co/WHZ3nRJ/visa.png" width="60px" />
             </div>
             <div className="row card-no">
-              {<p>{userdatas.card.number}</p>}
+              {<p>{userdatas?.card?.number}</p>}
               {/* <p>5244</p>
               <p>2150</p>
               <p>8252</p>
@@ -39,7 +40,7 @@ function CardsBank({ userdatas }: Props) {
             </div>
             <div className="row name">
               <p>JOE ALISON</p>
-              <p>{userdatas.card.expire}</p>
+              <p>{userdatas?.card?.expire}</p>
             </div>
           </div>
           <div className="back">
@@ -49,7 +50,7 @@ function CardsBank({ userdatas }: Props) {
               <div>
                 <img src="https://i.ibb.co/S6JG8px/pattern.png" />
               </div>
-              <p>{userdatas.card.cvv}</p>
+              <p>{userdatas?.card?.cvv}</p>
             </div>
             <div className="row card-text">
               <p>

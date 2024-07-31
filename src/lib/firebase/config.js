@@ -23,7 +23,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-const analytics = getAnalytics(app);
 export const db = getFirestore(app); // Initialize Firestore
 
-// No need for the old firebase initialization with fb.apps.length
+let analytics;
+if (typeof window !== 'undefined') {
+    analytics = getAnalytics(app);
+}
