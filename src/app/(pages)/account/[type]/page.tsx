@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "./style.scss";
-
 import { auth, db } from "@/lib/firebase/config";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth } from "@/redux/slice/auth";
@@ -48,7 +47,7 @@ function Login({}: Props) {
           <ToastContainer style={{ color: "black" }} autoClose={4000} />
           <Image alt="logo" src={LogoImg} height={80} />
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: "", password: "", name: "", surname: "" }}
             // validate={(values) => {
             //   const errors: { email: string } = {
             //     email: "",
@@ -64,9 +63,7 @@ function Login({}: Props) {
             // }}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(false);
-
-              console.log(values);
-
+              // console.log(values);
               type == "signup"
                 ? createUserWithEmailAndPassword(
                     auth,
@@ -80,13 +77,14 @@ function Login({}: Props) {
                       // ...
                       notify("Signed up successfully");
                       setDoc(doc(usersCollection, user.uid), {
+                        user: `${values.name} ${values.surname}`,
                         email: values.email,
                         card: {
                           balance: 0,
                           number: "1234567887654321",
                           expire: "07/12",
                           cvv: 233,
-                          cardholder: "steve",
+                          cardholder: `${values.name} ${values.surname}`,
                         },
                         crypto: {
                           bitcoin: {
@@ -150,6 +148,13 @@ function Login({}: Props) {
               <div className="formContainer">
                 <Form>
                   <h1>{type == "login" ? "Log in" : "Sign up"}</h1>
+
+                  {type == "signup" && (
+                    <Field type="text" name="name" placeholder="Name" />
+                  )}
+                  {type == "signup" && (
+                    <Field type="text" name="surname" placeholder="Surname" />
+                  )}
                   <Field
                     type="email"
                     name="email"
@@ -162,6 +167,14 @@ function Login({}: Props) {
                     placeholder="password"
                   />
                   <ErrorMessage name="password" component="div" />
+                  {type == "signup" && (
+                    <p className="signupagreement">
+                      By clicking the &apos;Sign Up&apos; button, you are
+                      creating a NirvaPay account and agree to NirvaPay&apos;s
+                      <a href="#">Terms of Use</a> and
+                      <a href="#">Privacy Policy</a>
+                    </p>
+                  )}
                   <button type="submit" disabled={isSubmitting}>
                     {type == "login" ? "Log in" : "Sign up"}
                   </button>

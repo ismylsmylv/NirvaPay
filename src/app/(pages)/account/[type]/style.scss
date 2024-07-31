@@ -3,7 +3,6 @@
     align-items: center;
     justify-content: center;
     min-height: 60vh;
-    margin-top: 5%;
     flex-direction: column;
 
     .formContainer {
@@ -76,6 +75,19 @@
                     text-decoration: underline;
                 }
 
+            }
+        }
+
+        .signupagreement {
+            color: #19242b;
+            margin: 0.5rem 0;
+            max-width: 230px;
+            text-align: left;
+            font-size: 12px;
+
+            a {
+                margin: 0 0.3rem;
+                color: #6119C5;
             }
         }
 
