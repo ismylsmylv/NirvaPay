@@ -8,13 +8,13 @@ import "./style.scss";
 type Props = { userdatas: any };
 function numberSpace(a: string) {
   const spaced =
-    a.slice(0, 4) +
+    a?.slice(0, 4) +
     " " +
-    a.slice(4, 8) +
+    a?.slice(4, 8) +
     " " +
-    a.slice(8, 12) +
+    a?.slice(8, 12) +
     " " +
-    a.slice(12, 16);
+    a?.slice(12, 16);
   return spaced;
 }
 function CardsBank({ userdatas }: Props) {

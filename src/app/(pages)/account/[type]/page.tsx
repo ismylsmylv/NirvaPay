@@ -53,6 +53,7 @@ function Login({}: Props) {
         router.push("/account/login");
       }
     }
+    console.log(authState);
   }, [authState]);
   authState && router.push("/dashboard");
   const notify = (alert: any) => toast(alert);

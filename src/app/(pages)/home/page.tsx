@@ -14,7 +14,8 @@ function Homepage({}: Props) {
   const router = useRouter();
   useEffect(() => {
     dispatch(checkAuth());
-    auth && router.push("/dashboard");
+    !auth && router.push("/dashboard");
+    console.log(auth);
   }, []);
   return (
     <>

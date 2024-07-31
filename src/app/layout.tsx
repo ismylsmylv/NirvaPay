@@ -1,10 +1,9 @@
 "use client";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 import Navbar from "@/components/navbar/page";
-import { Provider } from "react-redux";
 import { store } from "@/redux/store/store";
+import { Inter } from "next/font/google";
+import { Provider } from "react-redux";
+import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 // export const metadata: Metadata = {

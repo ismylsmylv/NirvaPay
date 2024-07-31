@@ -1,18 +1,13 @@
-import React, { useEffect } from "react";
-import { RiDashboardLine } from "react-icons/ri";
-import { RiWallet3Line } from "react-icons/ri";
-import { GrTransaction } from "react-icons/gr";
-import { IoSettingsOutline } from "react-icons/io5";
-import { useParams } from "next/navigation";
-import { FaRegBell } from "react-icons/fa6";
-import { CgProfile } from "react-icons/cg";
-import "./style.scss";
-import LogoImg from "@/assets/img/logo.png";
-import Image from "next/image";
-import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth } from "@/redux/slice/auth";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { FaRegBell } from "react-icons/fa6";
+import { GrTransaction } from "react-icons/gr";
+import { IoSettingsOutline } from "react-icons/io5";
+import { RiDashboardLine, RiWallet3Line } from "react-icons/ri";
+import "./style.scss";
 type Props = {};
 const navs = [
   { icon: <RiDashboardLine size={25} />, name: "Dashboard", url: "/" },
@@ -32,7 +27,7 @@ function Navbar({}: Props) {
   const auth = useAppSelector((state) => state.auth.auth);
   useEffect(() => {
     dispatch(checkAuth());
-  }, []);
+  }, [auth]);
   return (
     <div className="Navbar">
       {auth && (
