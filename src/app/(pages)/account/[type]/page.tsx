@@ -27,6 +27,16 @@ function CardVendor() {
   var item = arr[Math.floor(Math.random() * arr.length)];
   return item;
 }
+
+function CardExpire() {
+  const date = new Date();
+  let month = date.getMonth() + 1;
+  if (month < 10) {
+    month = "0" + month;
+  }
+  const year = JSON.stringify(date.getFullYear() + 5).slice(2, 4);
+  return `${month}/${year}`;
+}
 function Login({}: Props) {
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection);
@@ -87,14 +97,15 @@ function Login({}: Props) {
                         `${Math.floor(
                           100000000000000 + Math.random() * 900000000000000
                         )}`;
+                      const cvv = Math.floor(100 + Math.random() * 900);
                       setDoc(doc(usersCollection, user.uid), {
                         user: `${values.name} ${values.surname}`,
                         email: values.email,
                         card: {
                           balance: 0,
                           number: cardNumber,
-                          expire: "07/12",
-                          cvv: 233,
+                          expire: CardExpire(),
+                          cvv: cvv,
                           cardholder: `${values.name} ${values.surname}`,
                         },
                         crypto: {

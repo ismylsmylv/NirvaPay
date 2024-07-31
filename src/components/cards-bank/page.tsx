@@ -58,7 +58,12 @@ function CardsBank({ userdatas }: Props) {
                 />
               </div>
               <div className="row card-no">
-                {<p>{numberSpace(userdatas?.card?.number)}</p>}
+                {
+                  <p>
+                    {userdatas?.card?.number &&
+                      numberSpace(userdatas?.card?.number)}
+                  </p>
+                }
                 {/* <p>5244</p>
               <p>2150</p>
               <p>8252</p>
