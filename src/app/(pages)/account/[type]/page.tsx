@@ -21,6 +21,12 @@ import { collection, doc, setDoc } from "firebase/firestore";
 
 type Props = {};
 
+// 2, 4, 5
+function CardVendor() {
+  const arr = [2, 4, 5];
+  var item = arr[Math.floor(Math.random() * arr.length)];
+  return item;
+}
 function Login({}: Props) {
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection);
@@ -76,12 +82,17 @@ function Login({}: Props) {
                       console.log(user);
                       // ...
                       notify("Signed up successfully");
+                      const cardNumber =
+                        `${CardVendor()}` +
+                        `${Math.floor(
+                          100000000000000 + Math.random() * 900000000000000
+                        )}`;
                       setDoc(doc(usersCollection, user.uid), {
                         user: `${values.name} ${values.surname}`,
                         email: values.email,
                         card: {
                           balance: 0,
-                          number: "1234567887654321",
+                          number: cardNumber,
                           expire: "07/12",
                           cvv: 233,
                           cardholder: `${values.name} ${values.surname}`,

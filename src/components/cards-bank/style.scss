@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 .CardsBank {
     padding: 1rem;
 
@@ -229,5 +231,17 @@
 
     .card:hover .card-inner {
         transform: rotateY(-180deg);
+    }
+
+    .row {
+        .logo {
+            font-family: "Istok Web", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+
+            span {
+                color: #6119C5;
+            }
+        }
     }
 }
