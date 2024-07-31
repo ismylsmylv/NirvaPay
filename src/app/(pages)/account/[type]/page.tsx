@@ -86,6 +86,21 @@ function Login({}: Props) {
                           number: "1234567887654321",
                           expire: "07/12",
                           cvv: 233,
+                          cardholder: "steve",
+                        },
+                        crypto: {
+                          bitcoin: {
+                            balance: 0,
+                            address: "",
+                          },
+                          ethereum: {
+                            balance: 0,
+                            address: "",
+                          },
+                          ton: {
+                            balance: 0,
+                            address: "",
+                          },
                         },
                       })
                         .then(() => {

@@ -10,12 +10,12 @@ type Props = {};
 function CardsBank({ userdatas }: Props) {
   const [copy, setcopy] = useState(false);
   const details = [
-    { title: "Cardholder name", value: userdatas?.card?.name },
+    { title: "Cardholder name", value: userdatas?.card?.cardholder },
     { title: "Card number", value: userdatas?.card?.number },
     { title: "Expiry date", value: userdatas?.card?.expire },
     { title: "CVV", value: userdatas?.card?.cvv },
   ];
-
+  const usage = 100000 - userdatas?.card?.balance;
   return (
     <div className="CardsBank">
       <ToastContainer />
@@ -39,7 +39,7 @@ function CardsBank({ userdatas }: Props) {
               {/* <p>VALID TILL</p> */}
             </div>
             <div className="row name">
-              <p>JOE ALISON</p>
+              <p>{userdatas?.card?.cardholder}</p>
               <p>{userdatas?.card?.expire}</p>
             </div>
           </div>
@@ -68,11 +68,19 @@ function CardsBank({ userdatas }: Props) {
       <div className="limits">
         <div className="heading">
           <p>monthly limits</p>
-          <h1>$20000 of $100000</h1>
+          <h1>${usage} of $100000</h1>
         </div>
         <div className="line">
-          <div className="spent"></div>
-          <div className="remaining"></div>
+          <div
+            className="spent"
+            style={{ width: `${100 - Math.round(usage / 1000)}%` }}
+          ></div>
+          <div
+            className="remaining"
+            style={{
+              width: `${Math.round(usage / 1000)}%`,
+            }}
+          ></div>
         </div>
       </div>
       <div className="seperator"></div>
