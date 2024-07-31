@@ -19,7 +19,7 @@ export const fetchUserById = createAsyncThunk(
     const docRef = doc(
       db,
       "users",
-      JSON.parse(localStorage.getItem("auth")).uid
+      JSON.parse(localStorage.getItem("auth") as string).uid
     );
     const docSnap = await getDoc(docRef);
 
@@ -43,26 +43,20 @@ export const authSlice = createSlice({
       // immutable state based off those changes
       state.auth = localStorage.getItem("auth") ? true : false;
       state.uid = state.auth
-        ? JSON.parse(localStorage.getItem("auth")).uid
+        ? JSON.parse(localStorage.getItem("auth") as string).uid
         : "";
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
     },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchUserById.fulfilled, (state, action) => {
       // Add user to the state array
-      state.userdatas = action.payload;
+      state.userdatas = action.payload as any;
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { checkAuth, decrement, incrementByAmount } = authSlice.actions;
+export const { checkAuth } = authSlice.actions;
 
 export default authSlice.reducer;

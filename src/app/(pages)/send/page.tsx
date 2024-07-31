@@ -1,14 +1,24 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState, Suspense } from "react";
 
 type Props = {};
 
 function Send({}: Props) {
+  const [search, setSearch] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
-  const search = searchParams.get("reciever");
-  return <div>Send to {search}</div>;
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setSearch(searchParams.get("reciever"));
+    }
+  }, [searchParams]);
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div>Send to {search}</div>
+    </Suspense>
+  );
 }
 
 export default Send;

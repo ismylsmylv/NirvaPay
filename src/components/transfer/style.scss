@@ -114,4 +114,20 @@
         background-color: white;
         width: fit-content;
     }
+
+    .link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        background-color: gray;
+        margin-top: 2rem;
+        border-radius: 0.5rem;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #DF452B;
+        }
+    }
 }

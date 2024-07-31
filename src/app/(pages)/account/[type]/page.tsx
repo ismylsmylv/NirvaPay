@@ -30,7 +30,7 @@ function CardVendor() {
 
 function CardExpire() {
   const date = new Date();
-  let month = date.getMonth() + 1;
+  let month: number | string = date.getMonth() + 1;
   if (month < 10) {
     month = "0" + month;
   }

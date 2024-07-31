@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import "./style.scss";
-import LogoImg from "@/assets/img/logo.png";
-import Image from "next/image";
-import { toast, ToastContainer } from "react-toastify";
-import { FaClipboard } from "react-icons/fa";
-import { FaClipboardCheck } from "react-icons/fa";
-import VisaImg from "@/assets/img/visa.png";
+import { useState } from "react";
 import MastercardImg from "@/assets/img/mastercard.png";
+import VisaImg from "@/assets/img/visa.png";
+import { IoCopy, IoCopyOutline } from "react-icons/io5";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./style.scss";
 type Props = { userdatas: any };
 function numberSpace(a: string) {
   const spaced =
@@ -41,7 +38,7 @@ function CardsBank({ userdatas }: Props) {
                 <div className="logo">
                   Nirva<p>Pay</p>
                 </div>
-                <Image
+                <img
                   alt="logo"
                   src={
                     userdatas?.card &&
@@ -95,7 +92,7 @@ function CardsBank({ userdatas }: Props) {
               </div>
               <div className="row signature">
                 <p>CUSTOMER SIGNATURE</p>
-                <Image
+                <img
                   alt="logo"
                   src={
                     userdatas?.card &&
@@ -160,8 +157,12 @@ function CardsBank({ userdatas }: Props) {
                     });
                   }}
                 >
-                  <p> {detail.value}</p>
-                  {copy ? <FaClipboardCheck /> : <FaClipboard />}
+                  <p>
+                    {detail.title == "Card number"
+                      ? numberSpace(detail.value)
+                      : detail.value}
+                  </p>
+                  {copy ? <IoCopy /> : <IoCopyOutline />}
                 </button>
               </div>
             );

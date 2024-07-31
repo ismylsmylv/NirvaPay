@@ -1,26 +1,34 @@
 "use client";
-import React from "react";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
-import "./style.scss";
-
+import { useAppSelector } from "@/redux/hooks/hooks";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { FaLongArrowAltDown, FaLongArrowAltUp } from "react-icons/fa";
-import "./style.scss";
+import React, { useState } from "react";
+import {
+  FaArrowDown,
+  FaArrowUp,
+  FaLongArrowAltDown,
+  FaLongArrowAltUp,
+} from "react-icons/fa";
+import { IoCopy, IoCopyOutline } from "react-icons/io5";
 import QRCode from "react-qr-code";
-import { useAppSelector } from "@/redux/hooks/hooks";
-var canvas = document.getElementById("canvas");
+import "./style.scss";
 
-type Props = {};
+type Props = {
+  userdatas: any;
+};
 function hideNumber(string: string) {
   const updatedString = string.slice(0, 4) + "********" + string.slice(12, 16);
   return updatedString;
 }
 function Transfer({ userdatas }: Props) {
   const [open, setOpen] = React.useState(false);
+  const [copy, setcopy] = useState(false);
   const uid = useAppSelector((state) => state.auth.uid);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setcopy(false);
+  };
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -67,6 +75,27 @@ function Transfer({ userdatas }: Props) {
             <div className="user">{userdatas?.card?.cardholder}</div>
             <div className="card">
               {userdatas?.card?.number && hideNumber(userdatas?.card?.number)}
+            </div>
+            <div
+              className="link"
+              onClick={() => {
+                setcopy(true);
+                navigator.clipboard.writeText(
+                  `${process.env.NEXT_PUBLIC_SEND_URL}/send?reciever=${uid}`
+                );
+              }}
+            >
+              {copy ? (
+                <>
+                  <p>Link copied</p>
+                  <IoCopy />
+                </>
+              ) : (
+                <>
+                  <p>Copy link</p>
+                  <IoCopyOutline size={20} fill="gray" />
+                </>
+              )}
             </div>
           </div>
         </Box>
