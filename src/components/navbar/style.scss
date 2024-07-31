@@ -6,7 +6,19 @@
         align-items: center;
         justify-content: space-between;
 
-        .logo {}
+        .logo {
+            font-family: "Istok Web", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+
+            p {
+                font-size: 1.8rem;
+
+                display: inline;
+                color: #6119C5;
+                font-weight: 600;
+            }
+        }
 
         .list {
             display: flex;

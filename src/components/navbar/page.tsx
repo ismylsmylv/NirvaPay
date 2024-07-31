@@ -38,8 +38,9 @@ function Navbar({}: Props) {
       {auth && (
         <>
           <div className="container">
-            <Link href={"/dashboard"}>
-              <Image alt="logo" src={LogoImg} height={40} />
+            <Link href={"/dashboard"} className="logo">
+              {/* <Image alt="logo" src={LogoImg} height={40} /> */}
+              Nirva<p>Pay</p>
             </Link>
             <div className="list">
               {navs.map((nav) => {

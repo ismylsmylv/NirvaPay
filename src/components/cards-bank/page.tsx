@@ -39,7 +39,7 @@ function CardsBank({ userdatas }: Props) {
               <div className="row">
                 {/* <Image alt="logo" src={LogoImg.src} height={30} width={120} /> */}
                 <div className="logo">
-                  Nirva<span>Pay</span>
+                  Nirva<p>Pay</p>
                 </div>
                 <Image
                   alt="logo"
