@@ -12,6 +12,7 @@ import {
 import { IoCopy, IoCopyOutline } from "react-icons/io5";
 import QRCode from "react-qr-code";
 import "./style.scss";
+import { useRouter } from "next/navigation";
 
 type Props = {
   userdatas: any;
@@ -24,6 +25,7 @@ function Transfer({ userdatas }: Props) {
   const [open, setOpen] = React.useState(false);
   const [copy, setcopy] = useState(false);
   const uid = useAppSelector((state) => state.auth.uid);
+  const router = useRouter();
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -42,7 +44,12 @@ function Transfer({ userdatas }: Props) {
   };
   return (
     <div className="Transfer">
-      <button className="left">
+      <button
+        className="left"
+        onClick={() => {
+          router.push("/send");
+        }}
+      >
         <div className="back">
           <FaArrowUp size={130} />
         </div>

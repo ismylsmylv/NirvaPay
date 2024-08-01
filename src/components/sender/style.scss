@@ -1,0 +1,112 @@
+.sender {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 0.2rem;
+
+        label {
+            text-align: left;
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        input {
+            background-color: transparent;
+            border: 1px solid #6119C5;
+            padding: 0.5rem 1rem;
+            outline: 0px solid #DF452B;
+            border-radius: 0.5rem;
+            width: 20rem;
+
+            &:focus {
+                border-color: #DF452B;
+            }
+        }
+
+        button {
+            width: 20rem;
+            background-color: #6119C5;
+            padding: 0.5rem 1rem;
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            text-transform: capitalize;
+
+            &:hover {
+                background-color: #DF452B;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            width: 20rem;
+
+            button {
+                font-weight: 500;
+                outline: 0px solid #DF452B;
+            }
+        }
+
+        .cardcontainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 5rem;
+
+            label {
+                text-align: left;
+                margin-bottom: 0.2rem;
+            }
+
+            .card {
+                padding: 1rem;
+                border: 1px solid #6119C5;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-radius: 0.5rem;
+                margin-top: 0.2rem;
+
+                .content {
+                    display: flex;
+                    align-items: center;
+                    justify-content: left;
+                    gap: 1rem;
+                    font-weight: 500;
+                }
+
+                .balance {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+}
