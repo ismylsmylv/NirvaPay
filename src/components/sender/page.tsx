@@ -1,4 +1,5 @@
 "use client";
+import { FaDollarSign } from "react-icons/fa6";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth, fetchUserById } from "@/redux/slice/auth";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -7,11 +8,11 @@ import VisaImg from "@/assets/img/visa.png";
 import MastercardImg from "@/assets/img/mastercard.png";
 import "./style.scss";
 type Props = {};
-
 function Sender({}: Props) {
   const [search, setSearch] = useState<string | null>(null);
   const [number, setNumber] = useState<number | string>("XXXX-XXXX-XXXX-XXXX");
-  const [amount, setAmount] = useState<number>();
+  const [amount, setAmount] = useState<number | string>();
+  const [error, seterror] = useState(" ");
   const searchParams = useSearchParams();
   const userdatas = useAppSelector((state) => state.auth.userdatas);
   const dispatch = useAppDispatch();
@@ -42,19 +43,35 @@ function Sender({}: Props) {
             value={number}
             placeholder="XXXX-XXXX-XXXX-XXXX"
             onChange={(e) => {
+              e.target.value.length > 16 &&
+                seterror("Card number can't exceed 16 digits");
+              e.target.value.length < 17 && seterror(" ");
+              e.target.value.match(/^[0-9]+$/) == null &&
+                seterror("Special characters aren't allowed");
               setNumber(e.target.value);
+              e.target.value.length == 0 && seterror("");
+            }}
+            onMouseLeave={() => {
+              seterror("");
             }}
           />
+          <div className="error">{error}</div>
           <label htmlFor="amount">Amount</label>
-          <input
-            id="amount"
-            type="number"
-            value={amount}
-            placeholder="Enter an amount"
-            onChange={(e) => {
-              setAmount(Number(e.target.value));
-            }}
-          />
+          <div className="amountInput">
+            <div className="icon">$</div>
+            <input
+              id="amount"
+              type="text"
+              value={amount}
+              placeholder="Enter an amount"
+              onChange={(e) => {
+                // Number(e.target.value) >= 0 &&
+                e.target.value.match(/^[0-9]+$/) != null &&
+                  setAmount(Number(e.target.value));
+                e.target.value.length == 0 && setAmount("");
+              }}
+            />
+          </div>
           <div className="buttons">
             <button
               onClick={(e) => {
@@ -104,7 +121,7 @@ function Sender({}: Props) {
                   {userdatas?.card?.number && hideNumber(userdatas.card.number)}
                 </div>
               </div>
-              <div className="balance">${userdatas?.card?.balance}</div>
+              <div className="balance">${10000 - userdatas?.card?.balance}</div>
             </div>
           </div>
           <button
