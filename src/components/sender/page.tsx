@@ -11,7 +11,7 @@ type Props = {};
 function Sender({}: Props) {
   const amounts = [5, 10, 20];
   const [search, setSearch] = useState<string | null>(null);
-  const [number, setNumber] = useState<number | string>("XXXX-XXXX-XXXX-XXXX");
+  const [number, setNumber] = useState<number | string>("");
   const [amount, setAmount] = useState<number | string>(0);
   const [error, seterror] = useState(" ");
   const [amountError, setAmountError] = useState(" ");
@@ -47,6 +47,7 @@ function Sender({}: Props) {
         <form action="">
           <label htmlFor="number">Send to</label>
           <input
+            required
             id="number"
             type="number"
             value={number}
@@ -69,6 +70,7 @@ function Sender({}: Props) {
           <div className="amountInput">
             <div className="icon">$</div>
             <input
+              required
               id="amount"
               type="text"
               value={amount}
@@ -137,6 +139,13 @@ function Sender({}: Props) {
           </div>
           <button
             onClick={(e) => {
+              if (JSON.stringify(number).length == 0) {
+                seterror("Enter the card number");
+              } else if (amount == 0) {
+                setAmountError("Enter the amount");
+              } else {
+                alert(JSON.stringify({ amount, number }));
+              }
               e.preventDefault();
             }}
           >
