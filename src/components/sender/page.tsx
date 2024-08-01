@@ -9,10 +9,12 @@ import MastercardImg from "@/assets/img/mastercard.png";
 import "./style.scss";
 type Props = {};
 function Sender({}: Props) {
+  const amounts = [5, 10, 20];
   const [search, setSearch] = useState<string | null>(null);
   const [number, setNumber] = useState<number | string>("XXXX-XXXX-XXXX-XXXX");
   const [amount, setAmount] = useState<number | string>(0);
   const [error, seterror] = useState(" ");
+  const [amountError, setAmountError] = useState(" ");
   const searchParams = useSearchParams();
   const userdatas: any = useAppSelector((state) => state.auth.userdatas);
   const dispatch = useAppDispatch();
@@ -71,39 +73,41 @@ function Sender({}: Props) {
               type="text"
               value={amount}
               placeholder="Enter an amount"
+              onMouseLeave={() => {
+                setAmountError("");
+              }}
               onChange={(e) => {
                 // Number(e.target.value) >= 0 &&
                 e.target.value.match(/^[0-9]+$/) != null &&
                   setAmount(Number(e.target.value));
                 e.target.value.length == 0 && setAmount(0);
+                const remaining = 10000 - userdatas?.card?.balance;
+                Number(e.target.value) > remaining
+                  ? setAmountError("Insufficient funds")
+                  : setAmountError("");
               }}
             />
           </div>
+          <div className="error">{amountError}</div>
+
           <div className="buttons">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setAmount(Number(amount) + 5);
-              }}
-            >
-              $5
-            </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setAmount(Number(amount) + 10);
-              }}
-            >
-              $10
-            </button>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setAmount(Number(amount) + 20);
-              }}
-            >
-              $20
-            </button>
+            {amounts.map((addAmount) => {
+              return (
+                <button
+                  key={addAmount}
+                  onClick={(e) => {
+                    const remaining = 10000 - userdatas?.card?.balance;
+                    e.preventDefault();
+                    setAmount(Number(amount) + addAmount);
+                    Number(amount) > remaining
+                      ? setAmountError("Insufficient funds")
+                      : setAmountError("");
+                  }}
+                >
+                  ${addAmount}
+                </button>
+              );
+            })}
           </div>
           <div className="cardcontainer">
             <label>Pay from</label>
