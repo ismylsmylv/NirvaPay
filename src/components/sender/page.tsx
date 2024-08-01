@@ -14,7 +14,7 @@ function Sender({}: Props) {
   const [amount, setAmount] = useState<number | string>();
   const [error, seterror] = useState(" ");
   const searchParams = useSearchParams();
-  const userdatas = useAppSelector((state) => state.auth.userdatas);
+  const userdatas: any = useAppSelector((state) => state.auth.userdatas);
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.auth);
   const router = useRouter();
