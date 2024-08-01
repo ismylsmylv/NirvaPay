@@ -103,7 +103,7 @@ function Login({}: Props) {
                         user: `${values.name} ${values.surname}`,
                         email: values.email,
                         card: {
-                          balance: 0,
+                          balance: 10000,
                           number: cardNumber,
                           expire: CardExpire(),
                           cvv: cvv,
