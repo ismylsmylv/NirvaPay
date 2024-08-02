@@ -2,9 +2,15 @@ import { db } from "@/lib/firebase/config";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-export interface transactionState {}
+export interface transactionState {
+  transaction: {};
+  completedTransaction: {};
+}
 
-const initialState: transactionState = {};
+const initialState: transactionState = {
+  transaction: {},
+  completedTransaction: {},
+};
 
 export const patchReciever = createAsyncThunk(
   "apps/patchReciever",
@@ -99,10 +105,14 @@ export const transactionSlice = createSlice({
     checktransaction: (state) => {
       console.log("first");
     },
+    setTransaction: (state, action) => {
+      state.transaction = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(patchReciever.fulfilled, (state, action) => {
       console.log("patchReciever fulfilled:", action.payload);
+      state.completedTransaction = state.transaction;
     });
     builder.addCase(patchReciever.rejected, (state, action) => {
       console.error("patchReciever rejected:", action.payload);
@@ -110,5 +120,5 @@ export const transactionSlice = createSlice({
   },
 });
 
-export const { checktransaction } = transactionSlice.actions;
+export const { checktransaction, setTransaction } = transactionSlice.actions;
 export default transactionSlice.reducer;

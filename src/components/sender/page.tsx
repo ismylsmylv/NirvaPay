@@ -6,7 +6,11 @@ import { checkAuth, fetchUserById, getUserById } from "@/redux/slice/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-import { patchReciever, patchSender } from "@/redux/slice/transaction";
+import {
+  patchReciever,
+  patchSender,
+  setTransaction,
+} from "@/redux/slice/transaction";
 import "./style.scss";
 type Props = {};
 function Sender({}: Props) {
@@ -23,12 +27,11 @@ function Sender({}: Props) {
   const uid = useAppSelector((state) => state.auth.uid);
   const reciever = useAppSelector((state) => state.auth.reciever);
   const router = useRouter();
-
+  const [proceeding, setproceeding] = useState(false);
   function hideNumber(number: string) {
     const updatedNumber = "**** " + number.slice(12, 16);
     return updatedNumber;
   }
-  let trDate = "";
   useEffect(() => {
     if (typeof window !== "undefined") {
       setSearch(searchParams.get("reciever"));
@@ -40,7 +43,6 @@ function Sender({}: Props) {
     dispatch(checkAuth());
     dispatch(fetchUserById());
     // !auth && router.push("/account/login"); UNCOMMENT LATER
-    trDate = new Date();
   }, [searchParams, search, dispatch, auth, router, reciever]);
 
   return (
@@ -90,7 +92,7 @@ function Sender({}: Props) {
                   setAmount(Number(e.target.value));
                 e.target.value.length == 0 && setAmount(0);
                 const remaining = userdatas?.card?.balance;
-                Number(e.target.value) > remaining + 1
+                Number(e.target.value) > remaining
                   ? setAmountError("Insufficient funds")
                   : setAmountError("");
               }}
@@ -106,10 +108,10 @@ function Sender({}: Props) {
                   onClick={(e) => {
                     const remaining = 10000 - userdatas?.card?.balance;
                     e.preventDefault();
-                    setAmount(Number(amount) + addAmount);
                     Number(amount) > remaining
                       ? setAmountError("Insufficient funds")
                       : setAmountError("");
+                    setAmount(Number(amount) + addAmount);
                   }}
                 >
                   ${addAmount}
@@ -144,6 +146,12 @@ function Sender({}: Props) {
             </div>
           </div>
           <button
+            disabled={
+              JSON.stringify(number)?.length === 0 ||
+              amount === 0 ||
+              amount > userdatas?.card?.balance ||
+              proceeding
+            }
             onClick={(e) => {
               e.preventDefault();
               if (JSON.stringify(number).length === 0) {
@@ -162,7 +170,6 @@ function Sender({}: Props) {
                   newBalance: amount,
                   transactions: transaction,
                 };
-
                 const senderData = {
                   docId: uid,
                   newBalance: amount,
@@ -170,12 +177,16 @@ function Sender({}: Props) {
                 };
                 dispatch(patchReciever(trData));
                 dispatch(patchSender(senderData));
-
+                dispatch(setTransaction(transaction));
                 console.log(trData);
+                setproceeding(true);
+                setTimeout(() => {
+                  router.push("/success");
+                }, 2000);
               }
             }}
           >
-            Proceed
+            {proceeding ? "Processing" : "Proceed"}
           </button>
         </form>
       </div>
