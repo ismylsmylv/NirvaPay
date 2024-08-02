@@ -25,7 +25,8 @@ function CardsBank({ userdatas }: Props) {
     { title: "Expiry date", value: userdatas?.card?.expire },
     { title: "CVV", value: userdatas?.card?.cvv },
   ];
-  const usage = 10000 - userdatas?.card?.balance;
+  const usage = userdatas?.card?.balance;
+  //10000 -
   return (
     <div className="CardsBank">
       <>
@@ -119,12 +120,12 @@ function CardsBank({ userdatas }: Props) {
           <div className="line">
             <div
               className="spent"
-              style={{ width: `${100 - Math.round(usage / 100)}%` }}
+              style={{ width: `${Math.round(usage / 100)}%` }}
             ></div>
             <div
               className="remaining"
               style={{
-                width: `${Math.round(usage / 100)}%`,
+                width: `${100 - Math.round(usage / 100)}%`,
               }}
             ></div>
           </div>
