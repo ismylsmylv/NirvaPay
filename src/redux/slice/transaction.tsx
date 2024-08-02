@@ -57,6 +57,49 @@ export const patchReciever = createAsyncThunk(
   }
 );
 
+export const patchSender = createAsyncThunk(
+  "apps/patchReciever",
+  async (
+    trData: { docId: string; newBalance: number; transactions: [] },
+    thunkAPI
+  ) => {
+    const docRef = doc(db, "users", trData.docId);
+
+    try {
+      console.log("Updating document:", trData.docId);
+      console.log("New Balance:", trData.newBalance);
+
+      // Fetch the existing document
+      const docSnapshot = await getDoc(docRef);
+      if (!docSnapshot.exists()) {
+        throw new Error("Document does not exist");
+      }
+
+      // Get the existing card data
+      const existingData = docSnapshot.data();
+      const existingCardBalance = existingData.card.balance || {};
+      const existingTransactions = existingData.transactions || [];
+      console.log(existingCardBalance + trData.newBalance);
+      const updatedBalance = existingCardBalance - trData.newBalance || 0;
+      const updatedTransactions =
+        [...existingTransactions, trData.transactions] || [];
+      console.log(updatedTransactions);
+      // Update only the balance in the card
+      await updateDoc(docRef, {
+        "card.balance": updatedBalance,
+        // Add transactions update if needed
+        transactions: updatedTransactions,
+      });
+
+      console.log("Document successfully updated");
+      return { trData };
+    } catch (error) {
+      console.error("Error updating document:", error);
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 export const transactionSlice = createSlice({
   name: "transaction",
   initialState,

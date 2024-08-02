@@ -10,7 +10,11 @@ import { getDatabase, ref, update } from "firebase/database";
 
 import "./style.scss";
 import { doc, updateDoc } from "firebase/firestore";
-import { checktransaction, patchReciever } from "@/redux/slice/transaction";
+import {
+  checktransaction,
+  patchReciever,
+  patchSender,
+} from "@/redux/slice/transaction";
 type Props = {};
 function Sender({}: Props) {
   const amounts = [5, 10, 20];
@@ -142,7 +146,7 @@ function Sender({}: Props) {
                   {userdatas?.card?.number && hideNumber(userdatas.card.number)}
                 </div>
               </div>
-              <div className="balance">${10000 - userdatas?.card?.balance}</div>
+              <div className="balance">${userdatas?.card?.balance}</div>
             </div>
           </div>
           <button
@@ -162,7 +166,14 @@ function Sender({}: Props) {
                   newBalance: amount,
                   transactions: transaction,
                 };
+
+                const senderData = {
+                  docId: uid,
+                  newBalance: amount,
+                  transactions: transaction,
+                };
                 dispatch(patchReciever(trData));
+                dispatch(patchSender(senderData));
 
                 console.log(trData);
               }
