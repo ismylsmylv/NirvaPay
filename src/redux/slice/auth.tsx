@@ -39,9 +39,9 @@ export const getUserById = createAsyncThunk(
   "users/getUserById",
   async (id, { rejectWithValue }) => {
     try {
-      if (!id) {
-        throw new Error("Invalid ID");
-      }
+      // if (!id) {
+      //   throw new Error("Invalid ID");
+      // }
 
       const docRef = doc(db, "users", id);
       const docSnap = await getDoc(docRef);
@@ -52,7 +52,7 @@ export const getUserById = createAsyncThunk(
         console.log("No such document!");
         return rejectWithValue("No such document!");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching document:", error);
       return rejectWithValue(error.message);
     }

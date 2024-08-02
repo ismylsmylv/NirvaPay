@@ -25,7 +25,7 @@ function Sender({}: Props) {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.auth);
   const uid = useAppSelector((state) => state.auth.uid);
-  const reciever = useAppSelector((state) => state.auth.reciever);
+  const reciever: any = useAppSelector((state) => state.auth.reciever);
   const router = useRouter();
   const [proceeding, setproceeding] = useState(false);
   function hideNumber(number: string) {
