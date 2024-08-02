@@ -123,6 +123,7 @@ function Login({}: Props) {
                             address: "",
                           },
                         },
+                        transactions: [],
                       })
                         .then(() => {
                           console.log("Document successfully written!");

@@ -115,15 +115,15 @@ function CardsBank({ userdatas }: Props) {
         <div className="limits">
           <div className="heading">
             <p>monthly limits</p>
-            <h1>${10000 - usage} of $10000</h1>
+            <h1>${usage} of $10000</h1>
           </div>
           <div className="line">
             <div
               className="spent"
-              style={{ width: `${100 - Math.round(usage / 100)}%` }}
+              style={{ width: `${Math.round(usage / 100)}%` }}
             ></div>
             <div
-              style={{ width: `${Math.round(usage / 100)}%` }}
+              style={{ width: `${100 - Math.round(usage / 100)}%` }}
               className="remaining"
             ></div>
           </div>

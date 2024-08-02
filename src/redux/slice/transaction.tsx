@@ -35,13 +35,17 @@ export const patchReciever = createAsyncThunk(
       // Get the existing card data
       const existingData = docSnapshot.data();
       const existingCardBalance = existingData.card.balance || {};
+      const existingTransactions = existingData.transactions || [];
       console.log(existingCardBalance + trData.newBalance);
       const updatedBalance = existingCardBalance + trData.newBalance || 0;
+      const updatedTransactions =
+        [...existingTransactions, trData.transactions] || [];
+      console.log(updatedTransactions);
       // Update only the balance in the card
       await updateDoc(docRef, {
         "card.balance": updatedBalance,
         // Add transactions update if needed
-        transactions: trData.transactions,
+        transactions: updatedTransactions,
       });
 
       console.log("Document successfully updated");

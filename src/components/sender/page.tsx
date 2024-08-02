@@ -42,7 +42,7 @@ function Sender({}: Props) {
     }
     dispatch(checkAuth());
     dispatch(fetchUserById());
-    !auth && router.push("/account/login");
+    // !auth && router.push("/account/login"); UNCOMMENT LATER
   }, [searchParams, search, dispatch, auth, router, reciever]);
 
   return (
@@ -152,15 +152,15 @@ function Sender({}: Props) {
               } else if (amount === 0) {
                 setAmountError("Enter the amount");
               } else {
-                // const transaction = {
-                //   from: userdatas?.card?.number,
-                //   to: number,
-                //   amount: amount,
-                // };
+                const transaction = {
+                  from: userdatas?.card?.number,
+                  to: number,
+                  amount: amount,
+                };
                 const trData = {
                   docId: search,
                   newBalance: amount,
-                  // transactions: transaction,
+                  transactions: transaction,
                 };
                 dispatch(patchReciever(trData));
 
