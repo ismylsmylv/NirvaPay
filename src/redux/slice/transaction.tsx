@@ -2,17 +2,9 @@ import { db } from "@/lib/firebase/config";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-export interface transactionState {
-  transaction: boolean;
-  userdatas: [];
-  uid: string;
-}
+export interface transactionState {}
 
-const initialState: transactionState = {
-  transaction: false,
-  userdatas: [],
-  uid: "",
-};
+const initialState: transactionState = {};
 
 export const patchReciever = createAsyncThunk(
   "apps/patchReciever",

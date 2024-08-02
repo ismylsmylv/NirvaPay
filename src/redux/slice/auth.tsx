@@ -16,7 +16,7 @@ const initialState: authState = {
   reciever: "",
 };
 export const fetchUserById = createAsyncThunk(
-  "users/fetchByIdStatus",
+  "users/fetchUserById",
   async () => {
     const docRef = doc(
       db,

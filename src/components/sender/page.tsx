@@ -1,20 +1,13 @@
 "use client";
-import { FaDollarSign } from "react-icons/fa6";
+import MastercardImg from "@/assets/img/mastercard.png";
+import VisaImg from "@/assets/img/visa.png";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth, fetchUserById, getUserById } from "@/redux/slice/auth";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState, Suspense } from "react";
-import VisaImg from "@/assets/img/visa.png";
-import MastercardImg from "@/assets/img/mastercard.png";
-import { getDatabase, ref, update } from "firebase/database";
+import { Suspense, useEffect, useState } from "react";
 
+import { patchReciever, patchSender } from "@/redux/slice/transaction";
 import "./style.scss";
-import { doc, updateDoc } from "firebase/firestore";
-import {
-  checktransaction,
-  patchReciever,
-  patchSender,
-} from "@/redux/slice/transaction";
 type Props = {};
 function Sender({}: Props) {
   const amounts = [5, 10, 20];
@@ -30,12 +23,12 @@ function Sender({}: Props) {
   const uid = useAppSelector((state) => state.auth.uid);
   const reciever = useAppSelector((state) => state.auth.reciever);
   const router = useRouter();
-  const db = getDatabase();
 
   function hideNumber(number: string) {
     const updatedNumber = "**** " + number.slice(12, 16);
     return updatedNumber;
   }
+  let trDate = "";
   useEffect(() => {
     if (typeof window !== "undefined") {
       setSearch(searchParams.get("reciever"));
@@ -47,6 +40,7 @@ function Sender({}: Props) {
     dispatch(checkAuth());
     dispatch(fetchUserById());
     // !auth && router.push("/account/login"); UNCOMMENT LATER
+    trDate = new Date();
   }, [searchParams, search, dispatch, auth, router, reciever]);
 
   return (
@@ -95,8 +89,8 @@ function Sender({}: Props) {
                 e.target.value.match(/^[0-9]+$/) != null &&
                   setAmount(Number(e.target.value));
                 e.target.value.length == 0 && setAmount(0);
-                const remaining = 10000 - userdatas?.card?.balance;
-                Number(e.target.value) > remaining
+                const remaining = userdatas?.card?.balance;
+                Number(e.target.value) > remaining + 1
                   ? setAmountError("Insufficient funds")
                   : setAmountError("");
               }}
@@ -151,6 +145,7 @@ function Sender({}: Props) {
           </div>
           <button
             onClick={(e) => {
+              e.preventDefault();
               if (JSON.stringify(number).length === 0) {
                 seterror("Enter the card number");
               } else if (amount === 0) {
@@ -160,6 +155,7 @@ function Sender({}: Props) {
                   from: userdatas?.card?.number,
                   to: number,
                   amount: amount,
+                  date: new Date().toISOString(),
                 };
                 const trData = {
                   docId: search,
@@ -177,7 +173,6 @@ function Sender({}: Props) {
 
                 console.log(trData);
               }
-              e.preventDefault();
             }}
           >
             Proceed
