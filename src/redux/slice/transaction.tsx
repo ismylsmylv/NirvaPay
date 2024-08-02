@@ -1,8 +1,6 @@
-import { app } from "@/lib/firebase/config";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { doc, getDoc, getFirestore, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 export interface transactionState {
   transaction: boolean;
@@ -16,26 +14,6 @@ const initialState: transactionState = {
   uid: "",
 };
 
-export const fetchUserById = createAsyncThunk(
-  "users/fetchByIdStatus",
-  async () => {
-    const transactionData = localStorage.getItem("transaction");
-    if (!transactionData) {
-      console.error("No transaction data in localStorage");
-      return;
-    }
-
-    const { uid } = JSON.parse(transactionData);
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      console.error("No such document!");
-    }
-  }
-);
 export const patchReciever = createAsyncThunk(
   "apps/patchReciever",
   async (
@@ -56,13 +34,14 @@ export const patchReciever = createAsyncThunk(
 
       // Get the existing card data
       const existingData = docSnapshot.data();
-      const existingCard = existingData.card || {};
-
+      const existingCardBalance = existingData.card.balance || {};
+      console.log(existingCardBalance + trData.newBalance);
+      const updatedBalance = existingCardBalance + trData.newBalance || 0;
       // Update only the balance in the card
       await updateDoc(docRef, {
-        "card.balance": trData.newBalance,
+        "card.balance": updatedBalance,
         // Add transactions update if needed
-        // transactions: trData.transactions,
+        transactions: trData.transactions,
       });
 
       console.log("Document successfully updated");
@@ -83,9 +62,6 @@ export const transactionSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchUserById.fulfilled, (state, action) => {
-      state.userdatas = action.payload as any;
-    });
     builder.addCase(patchReciever.fulfilled, (state, action) => {
       console.log("patchReciever fulfilled:", action.payload);
     });

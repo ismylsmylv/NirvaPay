@@ -147,16 +147,15 @@ function Sender({}: Props) {
           </div>
           <button
             onClick={(e) => {
-              if (JSON.stringify(number).length == 0) {
+              if (JSON.stringify(number).length === 0) {
                 seterror("Enter the card number");
-              } else if (amount == 0) {
+              } else if (amount === 0) {
                 setAmountError("Enter the amount");
               } else {
                 // const transaction = {
                 //   from: userdatas?.card?.number,
                 //   to: number,
                 //   amount: amount,
-                //   // date: new Date(),
                 // };
                 const trData = {
                   docId: search,
@@ -170,7 +169,7 @@ function Sender({}: Props) {
               e.preventDefault();
             }}
           >
-            proceed
+            Proceed
           </button>
         </form>
       </div>
