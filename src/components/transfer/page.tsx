@@ -85,6 +85,9 @@ function Transfer({ userdatas }: Props) {
             </div>
             <div
               className="link"
+              onMouseLeave={() => {
+                setcopy(false);
+              }}
               onClick={() => {
                 setcopy(true);
                 navigator.clipboard.writeText(

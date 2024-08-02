@@ -7,7 +7,7 @@
     gap: 2rem;
 
     .line {
-        min-width: 25%;
+        width: 25%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -24,7 +24,6 @@
         text-transform: capitalize;
         padding: 0.4rem;
         width: 25%;
-        max-width: 25%;
         border-radius: 0.5rem;
     }
 
