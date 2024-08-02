@@ -34,16 +34,24 @@ export const patchReciever = createAsyncThunk(
       const existingData = docSnapshot.data();
       const existingCardBalance = existingData.card.balance || {};
       const existingTransactions = existingData.transactions || [];
+      const existingNotifications = existingData.notifications || [];
       console.log(existingCardBalance + trData.newBalance);
       const updatedBalance = existingCardBalance + trData.newBalance || 0;
       const updatedTransactions =
         [...existingTransactions, trData.transactions] || [];
+      const notification = {
+        title: "Transaction successful",
+        content: trData.transactions,
+      };
+      const updatedNotifications =
+        [...existingNotifications, notification] || [];
       console.log(updatedTransactions);
       // Update only the balance in the card
       await updateDoc(docRef, {
         "card.balance": updatedBalance,
         // Add transactions update if needed
         transactions: updatedTransactions,
+        notifications: updatedNotifications,
       });
 
       console.log("Document successfully updated");
@@ -77,16 +85,24 @@ export const patchSender = createAsyncThunk(
       const existingData = docSnapshot.data();
       const existingCardBalance = existingData.card.balance || {};
       const existingTransactions = existingData.transactions || [];
+      const existingNotifications = existingData.notifications || [];
       console.log(existingCardBalance + trData.newBalance);
       const updatedBalance = existingCardBalance - trData.newBalance || 0;
       const updatedTransactions =
         [...existingTransactions, trData.transactions] || [];
+      const notification = {
+        title: "Transaction successful",
+        content: trData.transactions,
+      };
+      const updatedNotifications =
+        [...existingNotifications, notification] || [];
       console.log(updatedTransactions);
       // Update only the balance in the card
       await updateDoc(docRef, {
         "card.balance": updatedBalance,
         // Add transactions update if needed
         transactions: updatedTransactions,
+        notifications: updatedNotifications,
       });
 
       console.log("Document successfully updated");
