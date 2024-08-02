@@ -47,7 +47,7 @@ export const getUserById = createAsyncThunk(
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        return docSnap.data().card.number;
+        return docSnap.data();
       } else {
         console.log("No such document!");
         return rejectWithValue("No such document!");

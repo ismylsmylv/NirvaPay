@@ -6,7 +6,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState, Suspense } from "react";
 import VisaImg from "@/assets/img/visa.png";
 import MastercardImg from "@/assets/img/mastercard.png";
+import { getDatabase, ref, update } from "firebase/database";
+
 import "./style.scss";
+import { doc, updateDoc } from "firebase/firestore";
+import { checktransaction, patchReciever } from "@/redux/slice/transaction";
 type Props = {};
 function Sender({}: Props) {
   const amounts = [5, 10, 20];
@@ -19,8 +23,11 @@ function Sender({}: Props) {
   const userdatas: any = useAppSelector((state) => state.auth.userdatas);
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.auth);
+  const uid = useAppSelector((state) => state.auth.uid);
   const reciever = useAppSelector((state) => state.auth.reciever);
   const router = useRouter();
+  const db = getDatabase();
+
   function hideNumber(number: string) {
     const updatedNumber = "**** " + number.slice(12, 16);
     return updatedNumber;
@@ -30,7 +37,7 @@ function Sender({}: Props) {
       setSearch(searchParams.get("reciever"));
       if (search) {
         dispatch(getUserById(search));
-        setNumber(reciever);
+        setNumber(reciever?.card?.number);
       }
     }
     dispatch(checkAuth());
@@ -65,6 +72,7 @@ function Sender({}: Props) {
               seterror("");
             }}
           />
+
           <div className="error">{error}</div>
           <label htmlFor="amount">Amount</label>
           <div className="amountInput">
@@ -144,7 +152,20 @@ function Sender({}: Props) {
               } else if (amount == 0) {
                 setAmountError("Enter the amount");
               } else {
-                alert(JSON.stringify({ amount, number }));
+                // const transaction = {
+                //   from: userdatas?.card?.number,
+                //   to: number,
+                //   amount: amount,
+                //   // date: new Date(),
+                // };
+                const trData = {
+                  docId: search,
+                  newBalance: amount,
+                  // transactions: transaction,
+                };
+                dispatch(patchReciever(trData));
+
+                console.log(trData);
               }
               e.preventDefault();
             }}
