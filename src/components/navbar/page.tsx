@@ -16,7 +16,11 @@ const navs = [
     name: "Transactions",
     url: "/transactions",
   },
-  { icon: <FaRegBell size={25} />, name: "Notifications", url: "/settings" },
+  {
+    icon: <FaRegBell size={25} />,
+    name: "Notifications",
+    url: "/notifications",
+  },
   { icon: <IoSettingsOutline size={25} />, name: "Settings", url: "/settings" },
   // { icon: <CgProfile />, name: "Settings", url: "/profile" },
 ];

@@ -26,7 +26,6 @@ function CardsBank({ userdatas }: Props) {
     { title: "CVV", value: userdatas?.card?.cvv },
   ];
   const usage = userdatas?.card?.balance;
-  //10000 -
   return (
     <div className="CardsBank">
       <>

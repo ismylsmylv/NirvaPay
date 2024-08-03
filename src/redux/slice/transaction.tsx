@@ -42,6 +42,7 @@ export const patchReciever = createAsyncThunk(
       const notification = {
         title: "Transaction successful",
         content: trData.transactions,
+        unread: true,
       };
       const updatedNotifications =
         [...existingNotifications, notification] || [];
@@ -93,6 +94,7 @@ export const patchSender = createAsyncThunk(
       const notification = {
         title: "Transaction successful",
         content: trData.transactions,
+        unread: true,
       };
       const updatedNotifications =
         [...existingNotifications, notification] || [];
