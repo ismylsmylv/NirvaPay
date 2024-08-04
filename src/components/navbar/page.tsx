@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
-import { checkAuth } from "@/redux/slice/auth";
+import { checkAuth, fetchUserById } from "@/redux/slice/auth";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaRegBell } from "react-icons/fa6";
 import { GrTransaction } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -27,8 +27,16 @@ const navs = [
 function Navbar({}: Props) {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.auth);
+  const userdatas = useAppSelector((state) => state.auth.userdatas);
+  const [unread, setunread] = useState(0);
   useEffect(() => {
     dispatch(checkAuth());
+    dispatch(fetchUserById());
+    userdatas?.notifications?.map((notif) => {
+      if (!notif.unread) {
+        setunread(unread + 1);
+      }
+    });
   }, [auth]);
   return (
     <div className="Navbar">
@@ -43,6 +51,11 @@ function Navbar({}: Props) {
               {navs.map((nav) => {
                 return (
                   <Link href={nav.url} className="nav" key={nav.name}>
+                    {nav.name == "Notifications" && (
+                      <sup>
+                        <p>{unread}</p>
+                      </sup>
+                    )}
                     {nav.icon}
                   </Link>
                 );
