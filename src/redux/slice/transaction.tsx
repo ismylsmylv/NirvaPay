@@ -12,7 +12,7 @@ const initialState: transactionState = {
   completedTransaction: {},
 };
 
-export const patchReciever = createAsyncThunk(
+export const patchUser = createAsyncThunk(
   "apps/patchReciever",
   async (
     trData: { docId: string; newBalance: number; transactions: [] },
@@ -64,58 +64,6 @@ export const patchReciever = createAsyncThunk(
   }
 );
 
-export const patchSender = createAsyncThunk(
-  "apps/patchReciever",
-  async (
-    trData: { docId: string; newBalance: number; transactions: [] },
-    thunkAPI
-  ) => {
-    const docRef = doc(db, "users", trData.docId);
-
-    try {
-      console.log("Updating document:", trData.docId);
-      console.log("New Balance:", trData.newBalance);
-
-      // Fetch the existing document
-      const docSnapshot = await getDoc(docRef);
-      if (!docSnapshot.exists()) {
-        throw new Error("Document does not exist");
-      }
-
-      // Get the existing card data
-      const existingData = docSnapshot.data();
-      const existingCardBalance = existingData.card.balance || {};
-      const existingTransactions = existingData.transactions || [];
-      const existingNotifications = existingData.notifications || [];
-      console.log(existingCardBalance + trData.newBalance);
-      const updatedBalance = existingCardBalance - trData.newBalance || 0;
-      const updatedTransactions =
-        [...existingTransactions, trData.transactions] || [];
-      const notification = {
-        title: "Transaction successful",
-        content: trData.transactions,
-        unread: true,
-      };
-      const updatedNotifications =
-        [...existingNotifications, notification] || [];
-      console.log(updatedTransactions);
-      // Update only the balance in the card
-      await updateDoc(docRef, {
-        "card.balance": updatedBalance,
-        // Add transactions update if needed
-        transactions: updatedTransactions,
-        notifications: updatedNotifications,
-      });
-
-      console.log("Document successfully updated");
-      return { trData };
-    } catch (error) {
-      console.error("Error updating document:", error);
-      return thunkAPI.rejectWithValue({ error: error.message });
-    }
-  }
-);
-
 export const transactionSlice = createSlice({
   name: "transaction",
   initialState,
@@ -128,11 +76,11 @@ export const transactionSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(patchReciever.fulfilled, (state, action) => {
+    builder.addCase(patchUser.fulfilled, (state, action) => {
       console.log("patchReciever fulfilled:", action.payload);
       state.completedTransaction = state.transaction;
     });
-    builder.addCase(patchReciever.rejected, (state, action) => {
+    builder.addCase(patchUser.rejected, (state, action) => {
       console.error("patchReciever rejected:", action.payload);
     });
   },
