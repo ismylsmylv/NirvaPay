@@ -8,6 +8,8 @@ import "./style.scss";
 
 type Props = {};
 type Transaction = {
+  id: string;
+  amount: string;
   from: string;
   to: string;
   date: string;
@@ -17,7 +19,7 @@ function Success({}: Props) {
     (state) => state.transaction.completedTransaction
   );
   const router = useRouter();
-  const [transaction, settransaction] = useState({});
+  const [transaction, settransaction] = useState<Transaction>({});
   const searchParams = useSearchParams();
   useEffect(() => {
     if (typeof window !== "undefined") {
