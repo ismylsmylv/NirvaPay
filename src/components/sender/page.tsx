@@ -177,11 +177,11 @@ function Sender({}: Props) {
                 };
                 dispatch(patchReciever(trData));
                 dispatch(patchSender(senderData));
-                dispatch(setTransaction(transaction));
+                // dispatch(setTransaction(transaction));
                 console.log(trData);
                 setproceeding(true);
                 setTimeout(() => {
-                  router.push("/success");
+                  router.push(`/success?=transaction=${transaction}`);
                 }, 2000);
               }
             }}
