@@ -63,6 +63,45 @@ export const patchUser = createAsyncThunk(
     }
   }
 );
+export const readNotif = createAsyncThunk(
+  "apps/patchReciever",
+  async ({ notification, uid }, thunkAPI) => {
+    const docRef = doc(db, "users", uid);
+
+    try {
+      console.log("Updating document:", uid);
+      // Fetch the existing document
+      const docSnapshot = await getDoc(docRef);
+      if (!docSnapshot.exists()) {
+        throw new Error("Document does not exist");
+      }
+
+      // Get the existing card data
+      const existingData = docSnapshot.data();
+      const existingNotifications = existingData.notifications || [];
+
+      const readNotifications = existingNotifications.map((notif) => {
+        if (notif.content.date == notification.content.date) {
+          const read = !notif.unread;
+          return { ...notif, unread: read };
+        }
+        return notif;
+      });
+
+      const updatedNotifications = readNotifications;
+      // Update only the balance in the card
+      await updateDoc(docRef, {
+        notifications: updatedNotifications,
+      });
+
+      console.log("Document successfully updated");
+      return { updatedNotifications };
+    } catch (error) {
+      console.error("Error updating document:", error);
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
 
 export const transactionSlice = createSlice({
   name: "transaction",

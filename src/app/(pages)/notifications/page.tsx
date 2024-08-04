@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { fetchUserById } from "@/redux/slice/auth";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { GrTransaction } from "react-icons/gr";
 import { IoMdInformationCircleOutline } from "react-icons/io";
@@ -10,6 +10,7 @@ import { PiNewspaperBold } from "react-icons/pi";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import "./style.scss";
+import { readNotif } from "@/redux/slice/transaction";
 type Props = {};
 type Userdatas = {
   notifications: any;
@@ -19,6 +20,7 @@ function Notifications({}: Props) {
   const userdatas: Userdatas[] = useAppSelector(
     (state) => state.auth.userdatas
   );
+  const uid: Userdatas[] = useAppSelector((state) => state.auth.uid);
   useEffect(() => {
     dispatch(fetchUserById());
   }, []);
@@ -68,8 +70,15 @@ function Notifications({}: Props) {
                     <PiNewspaperBold size={20} />
                   </Link>
                   <button
+                    onClick={async () => {
+                      dispatch(readNotif({ uid, notification })).then(() => {
+                        dispatch(fetchUserById());
+                      });
+                    }}
                     data-tooltip-id="read"
-                    data-tooltip-content="Mark as read"
+                    data-tooltip-content={`Mark as 
+                      ${notification.unread ? " read" : " unread"}
+                      `}
                   >
                     <FaCheck size={20} />
                   </button>
