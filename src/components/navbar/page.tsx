@@ -24,20 +24,28 @@ const navs = [
   { icon: <IoSettingsOutline size={25} />, name: "Settings", url: "/settings" },
   // { icon: <CgProfile />, name: "Settings", url: "/profile" },
 ];
+
 function Navbar({}: Props) {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth.auth);
   const userdatas = useAppSelector((state) => state.auth.userdatas);
-  const [unread, setunread] = useState(0);
+  const [unread, setunread] = useState(false);
+  function unreadCount(notifications) {
+    // Count unread messages
+    const unreadCount = notifications?.filter(
+      (notification) => notification.unread
+    ).length;
+
+    // Set unread state
+    const unreadState = unreadCount;
+
+    return unreadState;
+  }
   useEffect(() => {
     dispatch(checkAuth());
     dispatch(fetchUserById());
-    userdatas?.notifications?.map((notif) => {
-      if (!notif.unread) {
-        setunread(unread + 1);
-      }
-    });
-  }, [auth]);
+    userdatas?.notifications?.lenght > 0 && setunread(true);
+  }, [auth, dispatch]);
   return (
     <div className="Navbar">
       {auth && (
@@ -52,8 +60,14 @@ function Navbar({}: Props) {
                 return (
                   <Link href={nav.url} className="nav" key={nav.name}>
                     {nav.name == "Notifications" && (
-                      <sup>
-                        <p>{unread}</p>
+                      <sup
+                        style={{
+                          display: unreadCount(userdatas?.notifications)
+                            ? "flex"
+                            : "none",
+                        }}
+                      >
+                        <p>{unreadCount(userdatas?.notifications)}</p>
                       </sup>
                     )}
                     {nav.icon}
