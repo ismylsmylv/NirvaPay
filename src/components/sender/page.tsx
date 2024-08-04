@@ -1,4 +1,5 @@
 "use client";
+import { v4 as uuidv4 } from "uuid";
 import MastercardImg from "@/assets/img/mastercard.png";
 import VisaImg from "@/assets/img/visa.png";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
@@ -159,6 +160,7 @@ function Sender({}: Props) {
                   setAmountError("Enter the amount");
                 } else {
                   const transaction = {
+                    id: uuidv4(),
                     from: userdatas?.card?.number,
                     to: number,
                     amount: amount,
