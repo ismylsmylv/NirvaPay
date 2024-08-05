@@ -29,65 +29,67 @@ function Notifications({}: Props) {
       <Tooltip id="receipt" />
       <Tooltip id="read" />
       <h1>Notifications</h1>
-      {userdatas?.notifications?.map(
-        (notification: {
-          title: string;
-          content: { date: string };
-          unread: boolean;
-        }) => {
-          if (notification.title == "Transaction successful") {
-            return (
-              <div
-                className={`notification ${
-                  notification.unread ? "unread" : "read"
-                }`}
-                key={notification.content.date}
-              >
-                <div className="type">
-                  {notification.title == "Transaction successful" ? (
-                    <GrTransaction size={35} fill="green" />
-                  ) : (
-                    <IoMdInformationCircleOutline />
-                  )}
-                  <div className="info">
-                    <div className="title">{notification.title}</div>
-                    <div className="date">{notification.content.date}</div>
+      {userdatas?.notifications
+        ?.toReversed()
+        .map(
+          (notification: {
+            title: string;
+            content: { date: string };
+            unread: boolean;
+          }) => {
+            if (notification.title == "Transaction successful") {
+              return (
+                <div
+                  className={`notification ${
+                    notification.unread ? "unread" : "read"
+                  }`}
+                  key={notification.content.date}
+                >
+                  <div className="type">
+                    {notification.title == "Transaction successful" ? (
+                      <GrTransaction size={35} fill="green" />
+                    ) : (
+                      <IoMdInformationCircleOutline />
+                    )}
+                    <div className="info">
+                      <div className="title">{notification.title}</div>
+                      <div className="date">{notification.content.date}</div>
+                    </div>
                   </div>
-                </div>
-                <div className="controls">
-                  <Link
-                    onClick={() => {
-                      // dispatch(setTransaction(notification.content));
-                      // router.push();
-                    }}
-                    href={`/success?transaction=${JSON.stringify(
-                      notification.content
-                    )}`}
-                    target="_blank"
-                    data-tooltip-id="receipt"
-                    data-tooltip-content="Get receipt"
-                  >
-                    <PiNewspaperBold size={20} />
-                  </Link>
-                  <button
-                    onClick={async () => {
-                      dispatch(readNotif({ uid, notification })).then(() => {
-                        dispatch(fetchUserById());
-                      });
-                    }}
-                    data-tooltip-id="read"
-                    data-tooltip-content={`Mark as 
+                  <div className="controls">
+                    <Link
+                      onClick={() => {
+                        // dispatch(setTransaction(notification.content));
+                        // router.push();
+                      }}
+                      href={`/success?transaction=${JSON.stringify(
+                        notification.content
+                      )}`}
+                      target="_blank"
+                      data-tooltip-id="receipt"
+                      data-tooltip-content="Get receipt"
+                    >
+                      <PiNewspaperBold size={20} />
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        dispatch(readNotif({ uid, notification })).then(() => {
+                          dispatch(fetchUserById());
+                        });
+                      }}
+                      data-tooltip-id="read"
+                      data-tooltip-content={`Mark as 
                       ${notification.unread ? " read" : " unread"}
                       `}
-                  >
-                    <FaCheck size={20} />
-                  </button>
+                    >
+                      <FaCheck size={20} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            );
+              );
+            }
           }
-        }
-      )}
+        )}
     </div>
   );
 }
