@@ -1,12 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
 export interface authState {
   auth: boolean;
   userdatas: [];
   uid: string;
   reciever: string;
+  cardholder: string;
 }
 
 const initialState: authState = {
@@ -14,6 +22,7 @@ const initialState: authState = {
   userdatas: [],
   uid: "",
   reciever: "",
+  cardholder: "",
 };
 export const fetchUserById = createAsyncThunk(
   "users/fetchUserById",
@@ -34,7 +43,30 @@ export const fetchUserById = createAsyncThunk(
     }
   }
 );
+export const fetchUserByCardNumber = createAsyncThunk(
+  "users/fetchUserByCardNumber",
+  async (cardNumber) => {
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("card.number", "==", cardNumber));
+      const querySnapshot = await getDocs(q);
 
+      if (!querySnapshot.empty) {
+        // Assuming you only expect one user per card number
+        const userDoc = querySnapshot.docs[0];
+        console.log(userDoc.data());
+
+        return userDoc.data();
+      } else {
+        console.log("No such document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching user by card number:", error);
+      throw error;
+    }
+  }
+);
 export const getUserById = createAsyncThunk(
   "users/getUserById",
   async (id, { rejectWithValue }) => {
@@ -82,6 +114,12 @@ export const authSlice = createSlice({
     builder.addCase(getUserById.fulfilled, (state, action) => {
       // Add user to the state array
       state.reciever = action.payload as any;
+    });
+
+    builder.addCase(fetchUserByCardNumber.fulfilled, (state, action) => {
+      // Add user to the state array
+      state.cardholder = action.payload.card.cardholder;
+      // console.log(JSON.stringify(state.cardholder));
     });
   },
 });

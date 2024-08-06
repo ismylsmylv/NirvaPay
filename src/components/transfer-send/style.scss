@@ -1,0 +1,36 @@
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+
+    input {
+        background-color: transparent;
+        outline: none;
+        width: 90%;
+        text-align: center;
+    }
+
+    button {
+        background-color: #6119C5;
+        padding: 0.3rem 1rem;
+        border-radius: 0.5rem;
+        text-transform: capitalize;
+    }
+
+    .logo {
+        font-family: "Istok Web", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 600;
+
+        p {
+            font-size: 1.8rem;
+
+            display: inline;
+            color: #6119C5;
+            font-weight: 600;
+        }
+    }
+}
