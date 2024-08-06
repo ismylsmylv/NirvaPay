@@ -15,6 +15,8 @@ export interface authState {
   uid: string;
   reciever: string;
   cardholder: string;
+  verified: boolean;
+  info: string;
 }
 
 const initialState: authState = {
@@ -23,6 +25,8 @@ const initialState: authState = {
   uid: "",
   reciever: "",
   cardholder: "",
+  verified: false,
+  info: "",
 };
 export const fetchUserById = createAsyncThunk(
   "users/fetchUserById",
@@ -118,7 +122,19 @@ export const authSlice = createSlice({
 
     builder.addCase(fetchUserByCardNumber.fulfilled, (state, action) => {
       // Add user to the state array
-      state.cardholder = action?.payload || "none";
+      console.log(action.payload);
+      state.cardholder = action?.payload;
+      state.verified = true;
+      state.info = "Receiver:";
+      // console.log(JSON.stringify(state.cardholder));
+    });
+    builder.addCase(fetchUserByCardNumber.rejected, (state, action) => {
+      // Add user to the state array
+      console.log(action.payload);
+      state.cardholder = "none";
+      state.verified = false;
+      state.info =
+        "User is not registered as a Nirvapay user, or the card number you entered does not exist. Please verify details and try again";
       // console.log(JSON.stringify(state.cardholder));
     });
   },

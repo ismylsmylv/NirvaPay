@@ -17,8 +17,10 @@ function TransferSend({ style }: Props) {
   const [card, setcard] = useState<number>();
   const router = useRouter();
   const [image, setimage] = useState("");
-  const [verified, setverified] = useState(false);
+  // const [verified, setverified] = useState(false);
+  const info = useAppSelector((state) => state.auth.info);
   const cardholder = useAppSelector((state) => state.auth.cardholder);
+  const verified = useAppSelector((state) => state.auth.verified);
   const dispatch = useAppDispatch();
   const handleSendOpen = () => {
     setSendOpen(true);
@@ -68,26 +70,24 @@ function TransferSend({ style }: Props) {
               />
             </div>
             <div className="details">
-              <h1>
-                {cardholder && cardholder != "none"
-                  ? "Reciever:"
-                  : "User is not registered as a Nirvapay user, or the card number you entered does not exist. Please verify details and try again"}
-              </h1>
+              <h1>{info}</h1>
               {cardholder != "none" && (
                 <p className="animate__fadeInDown">{cardholder.user}</p>
               )}
             </div>
             <button
               onClick={() => {
-                cardholder
-                  ? router.push(
-                      `${process.env.NEXT_PUBLIC_SEND_URL}/send?reciever=${cardholder.uid}`
-                    )
-                  : dispatch(fetchUserByCardNumber(JSON.stringify(card)));
-                // console.log(cardholder, "cardholder");
+                dispatch(fetchUserByCardNumber(JSON.stringify(card)));
+
+                if (verified) {
+                  router.push(
+                    `${process.env.NEXT_PUBLIC_SEND_URL}/send?reciever=${cardholder.uid}`
+                  );
+                } else {
+                }
               }}
             >
-              {cardholder ? "Proceed to transfer" : "continue"}
+              {verified ? "Proceed to transfer" : "continue"}
             </button>
           </div>
         </Box>
