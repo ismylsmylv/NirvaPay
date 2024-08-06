@@ -118,7 +118,7 @@ export const authSlice = createSlice({
 
     builder.addCase(fetchUserByCardNumber.fulfilled, (state, action) => {
       // Add user to the state array
-      state.cardholder = action.payload.card.cardholder;
+      state.cardholder = action?.payload?.card?.cardholder || "none";
       // console.log(JSON.stringify(state.cardholder));
     });
   },

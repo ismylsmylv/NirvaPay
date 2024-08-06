@@ -1,17 +1,20 @@
 "use client";
+import MastercardImg from "@/assets/img/mastercard.png";
+import VisaImg from "@/assets/img/visa.png";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { fetchUserByCardNumber } from "@/redux/slice/auth";
 import { Box, Modal } from "@mui/material";
 import React, { useState } from "react";
 import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa6";
-import "animate.css";
+import { MdCreditCard } from "react-icons/md";
 import "./style.scss";
 type Props = {};
 
 function TransferSend({ style }: Props) {
   const [sendOpen, setSendOpen] = React.useState(false);
-  const [card, setcard] = useState(0);
+  const [card, setcard] = useState<number>();
+  const [image, setimage] = useState("");
   const cardholder = useAppSelector((state) => state.auth.cardholder);
   const dispatch = useAppDispatch();
   const handleSendOpen = () => {
@@ -33,23 +36,45 @@ function TransferSend({ style }: Props) {
             <div className="logo">
               Nirva<p>Pay</p>
             </div>
-            <input
-              required
-              value={card}
-              type="text"
-              maxLength={16}
-              onChange={(e) => {
-                e.target.value.match(/^[0-9]+$/) != null &&
+            <div className="input flex justify-start items-center gap-5">
+              {image ? (
+                <img alt="logo" src={image} width={60} height={60} />
+              ) : (
+                <MdCreditCard size={25} fill="gray" />
+              )}
+
+              <input
+                required
+                value={card}
+                type="text"
+                maxLength={16}
+                onChange={(e) => {
+                  //   e.target.value.match(/^[0-9]+$/) != null &&
                   setcard(Number(e.target.value));
-              }}
-              placeholder="enter the recipient card number"
-            />
-            {card}
-            {cardholder && <p className="animate__fadeInDown">{cardholder}</p>}
+                  e.target.value.slice(0, 1) == "4"
+                    ? setimage(VisaImg.src)
+                    : e.target.value.slice(0, 1) == "2"
+                    ? setimage(MastercardImg.src)
+                    : e.target.value.slice(0, 1) == "5"
+                    ? setimage(MastercardImg.src)
+                    : setimage("");
+                }}
+                placeholder="enter the recipient card number"
+              />
+            </div>
+
+            <h1>
+              {cardholder && cardholder != "none"
+                ? "Reciever:"
+                : "User is not registered as a Nirvapay user, or the card number you entered does not exist. Please verify your details and try again"}
+            </h1>
+            {cardholder != "none" && (
+              <p className="animate__fadeInDown">{cardholder}</p>
+            )}
             <button
               onClick={() => {
                 console.log(card);
-                // dispatch(fetchUserByCardNumber(card));
+                dispatch(fetchUserByCardNumber(card));
               }}
             >
               continue

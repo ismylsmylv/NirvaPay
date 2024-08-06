@@ -6,11 +6,16 @@
     padding: 1rem;
     gap: 2rem;
 
+    .input {
+        padding: 0.5rem 1rem;
+        border: 1px solid gray;
+        border-radius: 0.5rem;
+    }
+
     input {
         background-color: transparent;
         outline: none;
         width: 90%;
-        text-align: center;
     }
 
     button {
