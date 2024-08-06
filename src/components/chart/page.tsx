@@ -1,95 +1,95 @@
 "use client";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { axisClasses } from "@mui/x-charts/ChartsAxis";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { fetchUserById } from "@/redux/slice/auth";
+import Link from "next/link";
+import { useEffect } from "react";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import "./style.scss";
-// import { dataset } from "../dataset/weather";
-import React from "react";
-// const dataset = [{ month: "june", band: 200 }];
-const dataset = [
-  {
-    amount: 59,
-    month: "Jan",
-  },
-  {
-    amount: 50,
-    month: "Feb",
-  },
-  {
-    amount: 47,
-    month: "Mar",
-  },
-  {
-    amount: 54,
-    month: "Apr",
-  },
-  {
-    amount: 57,
-    month: "May",
-  },
-  {
-    amount: 60,
-    month: "June",
-  },
-  {
-    amount: 59,
-    month: "July",
-  },
-  {
-    amount: 65,
-    month: "Aug",
-  },
-  {
-    amount: 51,
-    month: "Sept",
-  },
-  {
-    amount: 60,
-    month: "Oct",
-  },
-  {
-    amount: 67,
-    month: "Nov",
-  },
-  {
-    amount: 61,
-    month: "Dec",
-  },
-];
-const valueFormatter = (value: number | null) => `${value}mm`;
-
-const chartSetting = {
-  yAxis: [
-    {
-      // label: "rainfall (mm)",
-    },
-  ],
-  series: [{ dataKey: "amount", label: "Seoul rainfall", valueFormatter }],
-  height: 300,
-  sx: {
-    [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
-      transform: "translateX(-10px)",
-    },
-  },
+type Props = {};
+type Userdatas = {
+  notifications: any;
 };
-
-export default function Charts() {
-  const tickPlacement = "middle";
-  const tickLabelPlacement = "middle";
+function Operations({}: Props) {
+  const dispatch = useAppDispatch();
+  const userdatas: Userdatas[] = useAppSelector(
+    (state) => state.auth.userdatas
+  );
+  const uid: Userdatas[] = useAppSelector((state) => state.auth.uid);
+  let i = 0;
+  useEffect(() => {
+    dispatch(fetchUserById());
+  }, []);
   return (
-    <div style={{ width: "100%" }} className="Charts">
-      <BarChart
-        dataset={dataset}
-        xAxis={[
-          {
-            scaleType: "band",
-            dataKey: "month",
-            tickPlacement,
-            tickLabelPlacement,
-            hideTooltip: true,
-          },
-        ]}
-        {...chartSetting}
-      />
+    <div className="Operations container">
+      <Tooltip id="receipt" />
+      <Tooltip id="read" />
+      <div className="heading">
+        <h1>Recent operations</h1>
+        <Link href={`/transactions`}>
+          <MdOutlineKeyboardArrowRight size={30} color="white" />
+        </Link>
+      </div>
+      <div className="operations">
+        {userdatas?.transactions
+          ?.toReversed()
+          .map(
+            (transaction: {
+              title: string;
+              content: { date: string };
+              unread: boolean;
+            }) => {
+              if (i < 6) {
+                i++;
+                const date = parseISO(transaction.date);
+                const result = formatDistanceToNow(date, { addSuffix: true });
+                return (
+                  <Link
+                    className={`operation`}
+                    key={transaction.date}
+                    href={`/success?transaction=${JSON.stringify(transaction)}`}
+                    target="_blank"
+                  >
+                    <div className="type">
+                      {/* {transaction.title == "Transaction successful" ? ( */}
+
+                      {userdatas.card.number == transaction.from ? (
+                        <FaArrowUp
+                          size={25}
+                          className="expense"
+                          fill="#ff0000"
+                        />
+                      ) : (
+                        <FaArrowDown
+                          size={25}
+                          className="income"
+                          fill="#008000"
+                        />
+                      )}
+
+                      {/* <GrTransaction size={30} /> */}
+                      {/* ) : ( */}
+                      {/* <IoMdInformationCircleOutline /> */}
+                      {/* )} */}
+                      <div className="info">
+                        <div className="title">Card to card</div>
+                        <div className="date">{result}</div>
+                      </div>
+                    </div>
+                    <div className="controls">
+                      <div className="amount">${transaction.amount}</div>
+                    </div>
+                  </Link>
+                );
+              }
+            }
+          )}
+      </div>
     </div>
   );
 }
+
+export default Operations;

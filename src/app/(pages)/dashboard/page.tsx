@@ -7,6 +7,7 @@ import Charts from "@/components/chart/page";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth, fetchUserById } from "@/redux/slice/auth";
+import Operations from "@/components/chart/page";
 type Props = {};
 
 function Dashboard({}: Props) {
@@ -28,7 +29,10 @@ function Dashboard({}: Props) {
           </div>
           <div className="">
             <Transfer userdatas={userdatas} />
-            <Charts />
+            <div className="infos flex gap-4">
+              <Operations />
+              <Operations />
+            </div>
           </div>
         </>
       )}

@@ -1,44 +1,69 @@
-.Charts {
+.Operations {
     margin-top: 1rem;
     background-color: transparent;
     border: 1px solid gray;
+
     border-radius: 0.5rem;
     padding: 1rem;
-    color: black !important;
     color: white;
 
-    .MuiChartsAxis-line,
-    .MuiChartsLegend-series,
-    .MuiChartsLegend-root,
-    .base-Popper-root,
-    .MuiChartsAxis-tick {
-        display: none;
+    .heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
     }
 
-    .MuiChartsAxis-tickLabel {
-        tspan {
-            font-weight: 600;
-            color: white;
+    .operations {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 0.7rem;
 
+        .operation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+
+            .info {
+                .title {
+                    // font-weight: 500;
+                }
+
+                .date {
+                    font-size: 0.9rem;
+                    color: gray;
+                }
+            }
         }
 
-        fill: rgb(255 255 255);
     }
 
-    #-clip-path,
-    clipPath {
-        display: none !important;
+    .unread {
+        border-color: #6119C5;
     }
 
-    .MuiBarElement-series-auto-generated-id-0 {
-        width: 1rem !important;
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
-        fill: #6119C5;
+    .read {
+        border-color: gray;
     }
-}
 
-.base-Popper-root {
-    display: none;
-    background-color: transparent;
+    .type,
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        .amount {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+    }
 }
