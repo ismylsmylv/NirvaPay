@@ -108,6 +108,15 @@ export const authSlice = createSlice({
         ? JSON.parse(localStorage.getItem("auth") as string).uid
         : "";
     },
+    updateVerified: (state) => {
+      state.verified = false;
+    },
+    updateInfo: (state) => {
+      state.info = "";
+    },
+    updateCardholder: (state) => {
+      state.cardholder = "";
+    },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -141,6 +150,7 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { checkAuth } = authSlice.actions;
+export const { checkAuth, updateVerified, updateInfo, updateCardholder } =
+  authSlice.actions;
 
 export default authSlice.reducer;
