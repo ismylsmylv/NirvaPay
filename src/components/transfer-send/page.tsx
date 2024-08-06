@@ -9,12 +9,15 @@ import { FaLongArrowAltUp } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa6";
 import { MdCreditCard } from "react-icons/md";
 import "./style.scss";
+import { useRouter } from "next/navigation";
 type Props = {};
 
 function TransferSend({ style }: Props) {
   const [sendOpen, setSendOpen] = React.useState(false);
   const [card, setcard] = useState<number>();
+  const router = useRouter();
   const [image, setimage] = useState("");
+  const [verified, setverified] = useState(false);
   const cardholder = useAppSelector((state) => state.auth.cardholder);
   const dispatch = useAppDispatch();
   const handleSendOpen = () => {
@@ -36,12 +39,14 @@ function TransferSend({ style }: Props) {
             <div className="logo">
               Nirva<p>Pay</p>
             </div>
-            <div className="input flex justify-start items-center gap-5">
-              {image ? (
-                <img alt="logo" src={image} width={60} height={60} />
-              ) : (
-                <MdCreditCard size={25} fill="gray" />
-              )}
+            <div className="input flex justify-start items-center gap-4">
+              <div className="imgCont">
+                {image ? (
+                  <img alt="logo" src={image} width={60} height={60} />
+                ) : (
+                  <MdCreditCard size={25} fill="gray" />
+                )}
+              </div>
 
               <input
                 required
@@ -49,8 +54,8 @@ function TransferSend({ style }: Props) {
                 type="text"
                 maxLength={16}
                 onChange={(e) => {
-                  //   e.target.value.match(/^[0-9]+$/) != null &&
-                  setcard(Number(e.target.value));
+                  e.target.value.match(/^[0-9]+$/) != null &&
+                    setcard(Number(e.target.value));
                   e.target.value.slice(0, 1) == "4"
                     ? setimage(VisaImg.src)
                     : e.target.value.slice(0, 1) == "2"
@@ -62,22 +67,27 @@ function TransferSend({ style }: Props) {
                 placeholder="enter the recipient card number"
               />
             </div>
-
-            <h1>
-              {cardholder && cardholder != "none"
-                ? "Reciever:"
-                : "User is not registered as a Nirvapay user, or the card number you entered does not exist. Please verify your details and try again"}
-            </h1>
-            {cardholder != "none" && (
-              <p className="animate__fadeInDown">{cardholder}</p>
-            )}
+            <div className="details">
+              <h1>
+                {cardholder && cardholder != "none"
+                  ? "Reciever:"
+                  : "User is not registered as a Nirvapay user, or the card number you entered does not exist. Please verify details and try again"}
+              </h1>
+              {cardholder != "none" && (
+                <p className="animate__fadeInDown">{cardholder.user}</p>
+              )}
+            </div>
             <button
               onClick={() => {
-                console.log(card);
-                dispatch(fetchUserByCardNumber(card));
+                cardholder
+                  ? router.push(
+                      `${process.env.NEXT_PUBLIC_SEND_URL}/send?reciever=${cardholder.uid}`
+                    )
+                  : dispatch(fetchUserByCardNumber(JSON.stringify(card)));
+                // console.log(cardholder, "cardholder");
               }}
             >
-              continue
+              {cardholder ? "Proceed to transfer" : "continue"}
             </button>
           </div>
         </Box>

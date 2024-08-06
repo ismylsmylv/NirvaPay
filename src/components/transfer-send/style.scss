@@ -3,19 +3,29 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem 0.8rem;
     gap: 2rem;
 
     .input {
         padding: 0.5rem 1rem;
         border: 1px solid gray;
         border-radius: 0.5rem;
+
+        width: 100%;
+
+
+        img {
+            object-fit: cover;
+            height: 1rem;
+            width: auto;
+
+        }
     }
 
     input {
         background-color: transparent;
         outline: none;
-        width: 90%;
+        width: 70%;
     }
 
     button {
@@ -36,6 +46,17 @@
             display: inline;
             color: #6119C5;
             font-weight: 600;
+        }
+    }
+
+    .details {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        h1 {
+            font-weight: 500;
         }
     }
 }

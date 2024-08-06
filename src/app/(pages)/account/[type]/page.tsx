@@ -101,6 +101,7 @@ function Login({}: Props) {
                       const cvv = Math.floor(100 + Math.random() * 900);
                       setDoc(doc(usersCollection, user.uid), {
                         user: `${values.name} ${values.surname}`,
+                        uid: user.uid,
                         email: values.email,
                         card: {
                           balance: 10000,

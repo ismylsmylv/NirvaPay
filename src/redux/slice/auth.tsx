@@ -51,16 +51,16 @@ export const fetchUserByCardNumber = createAsyncThunk(
       const q = query(usersRef, where("card.number", "==", cardNumber));
       const querySnapshot = await getDocs(q);
 
-      if (!querySnapshot.empty) {
-        // Assuming you only expect one user per card number
-        const userDoc = querySnapshot.docs[0];
-        console.log(userDoc.data());
+      // if (!querySnapshot.empty) {
+      // Assuming you only expect one user per card number
+      const userDoc = querySnapshot.docs[0];
+      console.log(userDoc.data());
 
-        return userDoc.data();
-      } else {
-        console.log("No such document!");
-        return null;
-      }
+      return userDoc.data();
+      // } else {
+      //   console.log("No such document!");
+      //   return null;
+      // }
     } catch (error) {
       console.error("Error fetching user by card number:", error);
       throw error;
@@ -118,7 +118,7 @@ export const authSlice = createSlice({
 
     builder.addCase(fetchUserByCardNumber.fulfilled, (state, action) => {
       // Add user to the state array
-      state.cardholder = action?.payload?.card?.cardholder || "none";
+      state.cardholder = action?.payload || "none";
       // console.log(JSON.stringify(state.cardholder));
     });
   },
