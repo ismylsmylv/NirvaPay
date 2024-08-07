@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import "./style.scss";
 import Cards from "@/components/cards/page";
 import Transfer from "@/components/transfer/page";
-import Charts from "@/components/chart/page";
+import Charts from "@/components/operations/page";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth, fetchUserById } from "@/redux/slice/auth";
-import Operations from "@/components/chart/page";
+import Operations from "@/components/operations/page";
 type Props = {};
 
 function Dashboard({}: Props) {

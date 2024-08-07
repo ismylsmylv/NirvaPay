@@ -1,9 +1,14 @@
+import Cards from "@/components/cards/page";
 import React from "react";
 
 type Props = {};
 
 function Wallet({}: Props) {
-  return <div>Wallet</div>;
+  return (
+    <div>
+      <Cards userdatas={undefined} />
+    </div>
+  );
 }
 
 export default Wallet;
