@@ -1,0 +1,69 @@
+.Charts {
+    margin-top: 1rem;
+    background-color: transparent;
+    border: 1px solid gray;
+
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: white;
+
+    .heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+    }
+
+    .charts {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 0.7rem;
+
+        .head {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            gap: 0.5rem;
+
+            img {
+                height: 2rem;
+                width: 2rem;
+                border-radius: 50%;
+            }
+
+            p {
+                text-transform: capitalize;
+                font-weight: 500;
+            }
+        }
+
+    }
+
+    .unread {
+        border-color: #6119C5;
+    }
+
+    .read {
+        border-color: gray;
+    }
+
+    .type,
+    .controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        .amount {
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+
+    }
+}

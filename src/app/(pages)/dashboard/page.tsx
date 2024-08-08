@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import "./style.scss";
 import Cards from "@/components/cards/page";
 import Transfer from "@/components/transfer/page";
-import Charts from "@/components/operations/page";
+import Charts from "@/components/charts/page";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth, fetchUserById } from "@/redux/slice/auth";
@@ -31,7 +31,7 @@ function Dashboard({}: Props) {
             <Transfer userdatas={userdatas} />
             <div className="infos flex gap-4">
               <Operations />
-              <Operations />
+              <Charts />
             </div>
           </div>
         </>
