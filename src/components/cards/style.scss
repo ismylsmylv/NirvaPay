@@ -24,9 +24,22 @@
             }
 
             .active {
+                font-weight: 500;
                 background-color: #6119C5;
 
             }
         }
     }
+}
+
+@media (max-width:600px) {
+    .Cards {
+        .switch {
+            button {
+                padding: 0.5rem 1rem !important;
+            }
+        }
+    }
+
+
 }

@@ -24,7 +24,7 @@ function Operations({}: Props) {
     dispatch(fetchUserById());
   }, []);
   return (
-    <div className="Operations container">
+    <div className="Operations">
       <Tooltip id="receipt" />
       <Tooltip id="read" />
       <div className="heading">
@@ -34,7 +34,7 @@ function Operations({}: Props) {
         </Link>
       </div>
 
-      {userdatas?.transactions.length > 0 ? (
+      {userdatas?.transactions?.length > 0 ? (
         <div className="operations">
           {userdatas?.transactions
             ?.toReversed()

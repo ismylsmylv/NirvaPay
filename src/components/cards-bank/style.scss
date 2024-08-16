@@ -75,6 +75,7 @@
             p {
                 text-transform: capitalize;
                 margin-right: 0.5rem;
+                text-align: left;
             }
 
             button {
@@ -247,6 +248,20 @@
                 color: #6119C5;
                 font-weight: 600;
             }
+        }
+    }
+}
+
+@media (max-width:600px) {
+    .CardsBank {
+
+        .details {
+            gap: 1rem;
+        }
+
+        .limits {
+            margin-bottom: 1rem !important;
+
         }
     }
 }

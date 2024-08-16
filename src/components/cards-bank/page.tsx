@@ -5,6 +5,7 @@ import { IoCopy, IoCopyOutline } from "react-icons/io5";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./style.scss";
+import Image from "next/image";
 type Props = { userdatas: any };
 function numberSpace(a: string) {
   const spaced =
@@ -92,7 +93,7 @@ function CardsBank({ userdatas }: Props) {
               </div>
               <div className="row signature">
                 <p>CUSTOMER SIGNATURE</p>
-                <img
+                <Image
                   alt="logo"
                   src={
                     userdatas?.card &&

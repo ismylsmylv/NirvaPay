@@ -8,32 +8,34 @@ type Props = {
 };
 
 function Cards({ userdatas }: Props) {
-  const [active, setactive] = useState(false);
+  const [active, setactive] = useState("bank");
   return (
     <div className="Cards">
       <div className="heading">
-        <div className="headText">My Account</div>
+        <div className="headText">
+          Welcome, {userdatas?.user?.split(" ")[0]}
+        </div>
         {/* <div className="subText"></div> */}
         <div className="switch">
           <button
-            className={active ? "active" : ""}
+            className={active == "crypto" ? "active" : ""}
             onClick={() => {
-              setactive(!active);
+              setactive("crypto");
             }}
           >
             crypto wallet
           </button>
           <button
-            className={!active ? "active" : ""}
+            className={active == "bank" ? "active" : ""}
             onClick={() => {
-              setactive(!active);
+              setactive("bank");
             }}
           >
             bank wallet
           </button>
         </div>
       </div>
-      {active ? (
+      {active == "crypto" ? (
         <CardsCrypto userdatas={userdatas} />
       ) : (
         <CardsBank userdatas={userdatas} />
