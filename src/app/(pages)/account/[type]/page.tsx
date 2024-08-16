@@ -231,6 +231,9 @@ function Login({}: Props) {
                           // IdP data available using getAdditionalUserInfo(result)
                           // ...
                         })
+                        .then(() => {
+                          router.push("/dashboard");
+                        })
                         .catch((error) => {
                           // Handle Errors here.
                           const errorCode = error.code;
@@ -250,9 +253,6 @@ function Login({}: Props) {
                             GoogleAuthProvider.credentialFromError(error);
                           // ...
                           console.log(error);
-                        })
-                        .then(() => {
-                          router.push("/dashboard");
                         });
                     }}
                   >

@@ -29,7 +29,7 @@ function Dashboard({}: Props) {
           </div>
           <div className="">
             <Transfer userdatas={userdatas} />
-            <div className="infos flex gap-4">
+            <div className="infos ">
               <Operations />
               <Charts />
             </div>

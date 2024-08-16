@@ -18,6 +18,13 @@ body {
   max-width: 1600px;
   margin: 0 auto;
   padding: 20px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 5px;
+  }
 }
 
 ::-webkit-scrollbar {

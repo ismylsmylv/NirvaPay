@@ -47,7 +47,7 @@ function Navbar({}: Props) {
     userdatas?.notifications?.lenght > 0 && setunread(true);
   }, [auth, dispatch]);
   return (
-    <div className="Navbar">
+    <div className="Navbar container">
       {auth && (
         <>
           <div className="container">
