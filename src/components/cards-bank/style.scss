@@ -121,7 +121,7 @@
         cursor: pointer;
         perspective: 1000px;
         margin-bottom: 2rem;
-        display: none;
+        display: block;
     }
 
     .card-inner {
@@ -262,6 +262,16 @@
         .limits {
             margin-bottom: 1rem !important;
 
+        }
+
+        .card {
+            width: 100% !important;
+            height: 300px !important;
+            // aspect-ratio: 16/9;
+        }
+
+        .card-no {
+            font-size: 25px;
         }
     }
 }
