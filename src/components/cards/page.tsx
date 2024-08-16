@@ -23,7 +23,7 @@ function Cards({ userdatas }: Props) {
               setactive("crypto");
             }}
           >
-            crypto wallet
+            <p> crypto wallet</p>
           </button>
           <button
             className={active == "bank" ? "active" : ""}
@@ -31,7 +31,7 @@ function Cards({ userdatas }: Props) {
               setactive("bank");
             }}
           >
-            bank wallet
+            <p>bank wallet</p>
           </button>
         </div>
       </div>
