@@ -15,7 +15,9 @@ import { useEffect, useState } from "react";
 import "./style.scss";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { getAuth, updatePassword } from "firebase/auth";
+import { getAuth, updatePassword, updateProfile } from "firebase/auth";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { app } from "@/lib/firebase/config";
 type Props = {};
 
 function Settings({}: Props) {
@@ -37,7 +39,6 @@ function Settings({}: Props) {
   const auth = getAuth();
 
   const user = auth.currentUser;
-  const newPassword = "newpassword";
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -48,7 +49,7 @@ function Settings({}: Props) {
     dispatch(fetchUserById());
     // !auth && router.push("/account/login");
     userdatas && setemail(userdatas.email);
-    userdatas && setusername(userdatas.user);
+    // userdatas && setusername(userdatas.user);
   }, [auth, dispatch, router, userdatas]);
   {
     /* uid */
@@ -122,8 +123,10 @@ function Settings({}: Props) {
                 </FormControl>
               </div>
               <Button
+                className="updateBtn"
                 variant="contained"
                 onClick={() => {
+                  console.log(user);
                   if (updateStatus.passwordUpdated) {
                     updatePassword(user, password)
                       .then(() => {
@@ -135,6 +138,18 @@ function Settings({}: Props) {
                         // ...
                         console.log(error);
                       });
+                  }
+                  if (updateStatus.usernameUpdated) {
+                    const db = getFirestore(app);
+                    const docRef = doc(db, "users", userdatas.uid);
+
+                    try {
+                      updateDoc(docRef, {
+                        user: username,
+                      });
+                    } catch (error) {
+                      console.error(error);
+                    }
                   }
                 }}
               >
