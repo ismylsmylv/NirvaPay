@@ -1,6 +1,7 @@
 .Settings {
     section {
         margin: 2rem 0;
+        padding: 1rem 0;
         width: 100%;
 
         h1 {
@@ -8,6 +9,31 @@
             border-bottom: 1px solid #6119C5;
             padding-bottom: 1rem;
             font-weight: 500;
+            font-size: 2rem;
+        }
+
+
+        label {
+            color: gray;
+
+        }
+
+
+        input {
+            color: white !important;
+
+            &::placeholder {
+                color: white !important;
+
+            }
+        }
+
+        .input {
+            margin: 1rem 0;
+        }
+
+        .MuiFormControl-root {
+            margin: 0 !important;
         }
     }
 }
