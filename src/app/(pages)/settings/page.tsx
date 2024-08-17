@@ -48,7 +48,7 @@ function Settings({}: Props) {
     dispatch(checkAuth());
     dispatch(fetchUserById());
     // !auth && router.push("/account/login");
-    userdatas && setemail(userdatas.email);
+    // userdatas && setemail(userdatas.email);
     // userdatas && setusername(userdatas.user);
   }, [auth, dispatch, router, userdatas]);
   {
@@ -146,6 +146,18 @@ function Settings({}: Props) {
                     try {
                       updateDoc(docRef, {
                         user: username,
+                      });
+                    } catch (error) {
+                      console.error(error);
+                    }
+                  }
+                  if (updateStatus.emailUpdated) {
+                    const db = getFirestore(app);
+                    const docRef = doc(db, "users", userdatas.uid);
+
+                    try {
+                      updateDoc(docRef, {
+                        email: email,
                       });
                     } catch (error) {
                       console.error(error);
