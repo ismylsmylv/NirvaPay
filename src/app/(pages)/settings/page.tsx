@@ -126,7 +126,6 @@ function Settings({}: Props) {
                 className="updateBtn"
                 variant="contained"
                 onClick={() => {
-                  console.log(user);
                   if (updateStatus.passwordUpdated) {
                     updatePassword(user, password)
                       .then(() => {
