@@ -7,6 +7,8 @@ import { GrTransaction } from "react-icons/gr";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiDashboardLine, RiWallet3Line } from "react-icons/ri";
 import "./style.scss";
+import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 type Props = {};
 const navs = [
   { icon: <RiDashboardLine size={25} />, name: "Dashboard", url: "/" },
@@ -30,6 +32,7 @@ function Navbar({}: Props) {
   const auth = useAppSelector((state) => state.auth.auth);
   const userdatas = useAppSelector((state) => state.auth.userdatas);
   const [unread, setunread] = useState(false);
+  const currentPath = usePathname();
   function unreadCount(notifications) {
     // Count unread messages
     const unreadCount = notifications?.filter(
@@ -58,7 +61,11 @@ function Navbar({}: Props) {
             <div className="list">
               {navs.map((nav) => {
                 return (
-                  <Link href={nav.url} className="nav" key={nav.name}>
+                  <Link
+                    href={nav.url}
+                    className={currentPath == nav.url ? "nav active" : "nav"}
+                    key={nav.name}
+                  >
                     {nav.name == "Notifications" && (
                       <sup
                         style={{

@@ -1,11 +1,10 @@
+"use client";
 import Operations from "@/components/operations/page";
-import React from "react";
-
 type Props = {};
 
 function Transactions({}: Props) {
   return (
-    <div>
+    <div className="container">
       <Operations />
     </div>
   );
