@@ -20,6 +20,7 @@ import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { app } from "@/lib/firebase/config";
 import SettingsProfile from "@/components/settings-profile/page";
 import SettingsAddress from "@/components/settings-address/page";
+import SettingsAccount from "@/components/settings-account/page";
 type Props = {};
 
 function Settings({}: Props) {
@@ -46,30 +47,7 @@ function Settings({}: Props) {
           <div className="Settings container">
             <SettingsProfile userdatas={userdatas} />
             <SettingsAddress userdatas={userdatas} />
-            <section>
-              <h1>Manage account</h1>
-              <ul>
-                <li>
-                  <p>log out</p>
-                  <button></button>
-                  <Button variant="outlined" color="error">
-                    log out
-                  </Button>
-                </li>
-                <li>
-                  <p>suspend account</p>
-                  <Button variant="outlined" color="error">
-                    suspend
-                  </Button>
-                </li>
-                <li>
-                  <p>delete account</p>
-                  <Button variant="outlined" color="error">
-                    delete
-                  </Button>
-                </li>
-              </ul>
-            </section>
+            <SettingsAccount userdatas={userdatas} />
           </div>
         </>
       )}
