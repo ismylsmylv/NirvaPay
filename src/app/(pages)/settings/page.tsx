@@ -1,26 +1,12 @@
 "use client";
+import SettingsAccount from "@/components/settings-account/page";
+import SettingsAddress from "@/components/settings-address/page";
+import SettingsProfile from "@/components/settings-profile/page";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
 import { checkAuth, fetchUserById } from "@/redux/slice/auth";
-import {
-  Button,
-  FormControl,
-  IconButton,
-  Input,
-  InputAdornment,
-  InputLabel,
-  TextField,
-} from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./style.scss";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { getAuth, updatePassword, updateProfile } from "firebase/auth";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { app } from "@/lib/firebase/config";
-import SettingsProfile from "@/components/settings-profile/page";
-import SettingsAddress from "@/components/settings-address/page";
-import SettingsAccount from "@/components/settings-account/page";
 type Props = {};
 
 function Settings({}: Props) {
