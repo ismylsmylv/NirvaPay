@@ -1,6 +1,8 @@
 import React from "react";
 import "./style.scss";
-type Props = {};
+type Props = {
+  userdatas: any;
+};
 
 function SettingsAddress({ userdatas }: Props) {
   const cryptos = [

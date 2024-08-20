@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
 import "./style.scss";
-type Props = {};
+type Props = {
+  userdatas: any;
+};
 const settings = [
   {
     heading: "Log out",

@@ -11,11 +11,13 @@ import {
   InputLabel,
   TextField,
 } from "@mui/material";
-import { getAuth, updatePassword } from "firebase/auth";
+import { getAuth, updatePassword, User } from "firebase/auth";
 import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 
-type Props = {};
+type Props = {
+  userdatas: any;
+};
 
 function SettingsProfile({ userdatas }: Props) {
   const [email, setemail] = useState("");
@@ -105,7 +107,7 @@ function SettingsProfile({ userdatas }: Props) {
         variant="contained"
         onClick={() => {
           if (updateStatus.passwordUpdated) {
-            updatePassword(user, password)
+            updatePassword(user as User, password)
               .then(() => {
                 // Update successful.
                 console.log("update success");
