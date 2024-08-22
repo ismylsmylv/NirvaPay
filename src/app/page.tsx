@@ -14,5 +14,5 @@ export default function Home() {
   useEffect(() => {
     dispatch(checkAuth());
   }, []);
-  return <>{auth ? <Dashboard /> : <Homepage />}</>;
+  return <>{!auth ? <Dashboard /> : <Homepage />}</>;
 }
