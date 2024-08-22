@@ -44,7 +44,7 @@ function SettingsAddress({ userdatas }: Props) {
       {cryptos.map((cryptoAddress) => {
         return (
           <div className="row" key={cryptoAddress.name}>
-            {JSON.stringify(userdatas.crypto[cryptoAddress.name])} crypto
+            {JSON.stringify(userdatas?.crypto?.[cryptoAddress.name])} crypto
             <div className="info">
               <Image src={cryptoAddress.img} alt="" height={50} width={50} />
               <p>{cryptoAddress.name}</p>
@@ -80,22 +80,22 @@ function SettingsAddress({ userdatas }: Props) {
           const docRef = doc(db, "users", userdatas.uid);
           const updatedCryptos = {
             bitcoin: {
-              address: btc,
+              address: btc || userdatas.crypto.bitcoin.address,
               balance: userdatas.crypto.bitcoin.balance,
             },
             ethereum: {
-              address: eth,
-              balance: 0,
+              address: eth || userdatas.crypto.ethereum.address,
+              balance: userdatas.crypto.ethereum.balance,
             },
             ton: {
-              address: ton,
-              balance: 0,
+              address: ton || userdatas.crypto.ton.address,
+              balance: userdatas.crypto.ton.balance,
             },
           };
           console.log(updatedCryptos);
           try {
             updateDoc(docRef, {
-              crypto: input,
+              crypto: updatedCryptos,
             });
           } catch (error) {
             console.error(error);
