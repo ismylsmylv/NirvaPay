@@ -120,6 +120,7 @@ function SettingsAddress({ userdatas }: Props) {
             updateDoc(docRef, {
               crypto: updatedCryptos,
             });
+            notify("Address updated");
           } catch (error) {
             console.error(error);
           }
