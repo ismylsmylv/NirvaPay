@@ -123,6 +123,7 @@ function SettingsAddress({ userdatas }: Props) {
             notify("Address updated");
           } catch (error) {
             console.error(error);
+            notify("Error while updating data");
           }
         }}
       >
