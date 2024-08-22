@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.scss";
+import Image from "next/image";
 type Props = {
   userdatas: any;
 };
@@ -36,7 +37,7 @@ function SettingsAddress({ userdatas }: Props) {
         return (
           <div className="row" key={crypto.name}>
             <div className="info">
-              <img src={crypto.img} alt="" />
+              <Image src={crypto.img} alt="" height={50} width={50} />
               <p>{crypto.name}</p>
             </div>
             <input type="text" placeholder="address" />
