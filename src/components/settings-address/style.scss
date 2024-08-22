@@ -1,8 +1,7 @@
 .SettingsAddress {
     .row {
-
-        padding: 1rem 0;
-        border-bottom: 1px solid gray;
+        padding: 1rem;
+        border: 1px solid gray;
         width: min-content;
 
         .info {
@@ -26,6 +25,7 @@
         input {
             background-color: transparent;
             color: white;
+            outline: none;
 
             &::placeholder {
                 color: gray;

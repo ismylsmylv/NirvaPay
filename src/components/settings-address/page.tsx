@@ -4,15 +4,19 @@ import React, { useState } from "react";
 import "./style.scss";
 import Image from "next/image";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { FaClipboard } from "react-icons/fa6";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@mui/material";
 type Props = {
   userdatas: any;
 };
 
 function SettingsAddress({ userdatas }: Props) {
-  const [input, setinput] = useState("");
   const [btc, setbtc] = useState("");
   const [eth, seteth] = useState("");
   const [ton, setton] = useState("");
+  const notify = (alert: any) => toast(alert);
   const cryptos = [
     {
       name: "bitcoin",
@@ -39,42 +43,61 @@ function SettingsAddress({ userdatas }: Props) {
   ];
   return (
     <section className="SettingsAddress">
+      <ToastContainer style={{ color: "black" }} autoClose={4000} />
       <h1>Addresses</h1>
-      <p>{JSON.stringify(userdatas)}</p>
-      {cryptos.map((cryptoAddress) => {
-        return (
-          <div className="row" key={cryptoAddress.name}>
-            {JSON.stringify(userdatas?.crypto?.[cryptoAddress.name])} crypto
-            <div className="info">
-              <Image src={cryptoAddress.img} alt="" height={50} width={50} />
-              <p>{cryptoAddress.name}</p>
+      {/* <p>{JSON.stringify(userdatas)}</p> */}
+      <div className="cards flex flex-wrap gap-2 my-5">
+        {cryptos.map((cryptoAddress) => {
+          return (
+            <div className="row rounded" key={cryptoAddress.name}>
+              <div className="info">
+                <Image src={cryptoAddress.img} alt="" height={50} width={50} />
+                <p>{cryptoAddress.name}</p>
+              </div>
+              <div className="flex gap-1">
+                <input
+                  type="text"
+                  placeholder={
+                    userdatas?.crypto?.[cryptoAddress?.name].address ||
+                    "enter address"
+                  }
+                  value={
+                    cryptoAddress.name == "bitcoin"
+                      ? btc
+                      : cryptoAddress.name == "ethereum"
+                      ? eth
+                      : cryptoAddress.name == "ton"
+                      ? ton
+                      : ""
+                  }
+                  onChange={(e) => {
+                    cryptoAddress.name == "bitcoin"
+                      ? setbtc(e.target.value)
+                      : cryptoAddress.name == "ethereum"
+                      ? seteth(e.target.value)
+                      : cryptoAddress.name == "ton"
+                      ? setton(e.target.value)
+                      : "";
+                  }}
+                />
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      userdatas?.crypto?.[cryptoAddress?.name].address
+                    );
+                    notify("Address copied to clipboard");
+                  }}
+                >
+                  <FaClipboard fill="gray" />
+                </button>
+              </div>
             </div>
-            <input
-              type="text"
-              placeholder="address"
-              value={
-                cryptoAddress.name == "bitcoin"
-                  ? btc
-                  : cryptoAddress.name == "ethereum"
-                  ? eth
-                  : cryptoAddress.name == "ton"
-                  ? ton
-                  : ""
-              }
-              onChange={(e) => {
-                cryptoAddress.name == "bitcoin"
-                  ? setbtc(e.target.value)
-                  : cryptoAddress.name == "ethereum"
-                  ? seteth(e.target.value)
-                  : cryptoAddress.name == "ton"
-                  ? setton(e.target.value)
-                  : "";
-              }}
-            />
-          </div>
-        );
-      })}
-      <button
+          );
+        })}
+      </div>
+      <Button
+        className="updateBtn"
+        variant="contained"
         onClick={() => {
           const db = getFirestore(app);
           const docRef = doc(db, "users", userdatas.uid);
@@ -103,7 +126,7 @@ function SettingsAddress({ userdatas }: Props) {
         }}
       >
         save
-      </button>
+      </Button>
     </section>
   );
 }
