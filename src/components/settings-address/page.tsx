@@ -1,11 +1,18 @@
-import React from "react";
+"use client";
+import { app } from "@/lib/firebase/config";
+import React, { useState } from "react";
 import "./style.scss";
 import Image from "next/image";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 type Props = {
   userdatas: any;
 };
 
 function SettingsAddress({ userdatas }: Props) {
+  const [input, setinput] = useState("");
+  const [btc, setbtc] = useState("");
+  const [eth, seteth] = useState("");
+  const [ton, setton] = useState("");
   const cryptos = [
     {
       name: "bitcoin",
@@ -33,17 +40,70 @@ function SettingsAddress({ userdatas }: Props) {
   return (
     <section className="SettingsAddress">
       <h1>Addresses</h1>
-      {cryptos.map((crypto) => {
+      <p>{JSON.stringify(userdatas)}</p>
+      {cryptos.map((cryptoAddress) => {
         return (
-          <div className="row" key={crypto.name}>
+          <div className="row" key={cryptoAddress.name}>
+            {JSON.stringify(userdatas.crypto[cryptoAddress.name])} crypto
             <div className="info">
-              <Image src={crypto.img} alt="" height={50} width={50} />
-              <p>{crypto.name}</p>
+              <Image src={cryptoAddress.img} alt="" height={50} width={50} />
+              <p>{cryptoAddress.name}</p>
             </div>
-            <input type="text" placeholder="address" />
+            <input
+              type="text"
+              placeholder="address"
+              value={
+                cryptoAddress.name == "bitcoin"
+                  ? btc
+                  : cryptoAddress.name == "ethereum"
+                  ? eth
+                  : cryptoAddress.name == "ton"
+                  ? ton
+                  : ""
+              }
+              onChange={(e) => {
+                cryptoAddress.name == "bitcoin"
+                  ? setbtc(e.target.value)
+                  : cryptoAddress.name == "ethereum"
+                  ? seteth(e.target.value)
+                  : cryptoAddress.name == "ton"
+                  ? setton(e.target.value)
+                  : "";
+              }}
+            />
           </div>
         );
       })}
+      <button
+        onClick={() => {
+          const db = getFirestore(app);
+          const docRef = doc(db, "users", userdatas.uid);
+          const updatedCryptos = {
+            bitcoin: {
+              address: btc,
+              balance: userdatas.crypto.bitcoin.balance,
+            },
+            ethereum: {
+              address: eth,
+              balance: 0,
+            },
+            ton: {
+              address: ton,
+              balance: 0,
+            },
+          };
+          console.log(updatedCryptos);
+          try {
+            updateDoc(docRef, {
+              crypto: input,
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+      >
+        save
+      </button>
     </section>
   );
 }
